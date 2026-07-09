@@ -13,6 +13,15 @@ _(Boş — sıradaki iş buraya)_
 
 ---
 
+## 2026-07-10 — Dil seçici Win95 pencere içi sağ alt
+
+- Ana menü: `TR/EN` select tarayıcı/masaüstü köşesinde değil; **menu-box** status bar sağında.
+- Masaüstü oyun: enstrüman barı sağ alt.
+- Mobil: alt nav satırında sağ (oklar arası).
+- Select stili sunken Win95 border.
+
+---
+
 ## 2026-07-10 — GitHub deploy script + full server deploy
 
 ### Deploy

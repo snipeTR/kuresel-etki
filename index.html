@@ -34,10 +34,13 @@
       <button id="btn-about" class="btn btn-big" data-i18n="ui.how_to_play">Nasıl Oynanır?</button>
     </div>
     <p class="menu-note" data-i18n="ui.menu_note">Paralel evrende 2026. Dünya ekonomisi istikrarlı görünüyor… ama uzmanlar küresel sistemin aşırı kırılgan olduğunu söylüyor.</p>
+    <!-- Dil: Win95 penceresi (menu-box) içi sağ alt -->
+    <div class="win-statusbar">
+      <span class="win-statusbar-grip" aria-hidden="true"></span>
+      <div id="lang-switcher" data-lang-switcher class="lang-switcher lang-switcher-inbox" aria-label="Language"></div>
+    </div>
   </div>
   <p class="menu-mission" data-i18n="ui.menu_mission">Misyon: Ekonomik enstrümanların zincirleme etkilerini anlamak. Kazanmak değil; her kararın dünya üzerindeki izini görmek.</p>
-  <!-- Sağ alt: 3 harfli dil seçimi (TR / EN …) -->
-  <div id="lang-switcher" data-lang-switcher class="lang-switcher lang-switcher-br" aria-label="Language"></div>
 </div>
 
 <!-- ============ NASIL OYNANIR ============ -->
@@ -126,6 +129,8 @@
     <div id="instr-list"></div>
     <div id="instr-pager" class="instr-pager"></div>
     <div id="pending-changes"></div>
+    <!-- Masaüstü: dil seçici oyun çerçevesi alt bar sağ kenar -->
+    <div id="lang-switcher-game" data-lang-switcher class="lang-switcher lang-switcher-instrbar lang-switcher-desktop" aria-label="Language"></div>
   </footer>
 
   <!-- Mobil 9:16 kabuk: sekmeler soldan sağa kayar; desktop'ta gizli -->
@@ -180,13 +185,11 @@
         <div id="m-nav-label" data-i18n="ui.nav_status">Durum</div>
         <div id="m-nav-dots" class="m-nav-dots"></div>
       </div>
+      <!-- Mobil: dil seçici alt bar sağ kenar (pencere içi) -->
+      <div id="lang-switcher-mobile" data-lang-switcher class="lang-switcher lang-switcher-mobile-nav" aria-label="Language"></div>
       <button type="button" id="m-nav-next" class="btn m-nav-btn" data-i18n-title="ui.next_tab">▶</button>
     </nav>
-    <!-- Mobil: dil seçici pencere içi sağ alt (nav üstü) -->
-    <div id="lang-switcher-mobile" data-lang-switcher class="lang-switcher lang-switcher-inwindow lang-switcher-mobile" aria-label="Language"></div>
   </div>
-  <!-- Masaüstü: dil seçici oyun penceresi sağ alt -->
-  <div id="lang-switcher-game" data-lang-switcher class="lang-switcher lang-switcher-inwindow lang-switcher-desktop" aria-label="Language"></div>
 </div>
 
 <!-- ============ OYUN SONU ============ -->
