@@ -1,7 +1,8 @@
 # KÜRESEL ETKİ — AGENTS.md (Kalıcı Kurallar ve Mimari)
 
 > Bu dosya ajanlar ve geliştiriciler için **değişmez / korunması gereken** proje bilgisidir.
-> Gizli sunucu adresleri, yayın yolları ve **henüz yapılmamış** işler → `YAPILACAKLAR.md`.
+> Gizli sunucu adresleri, yayın yolları ve **henüz yapılmamış** işler → yerel `YAPILACAKLAR.md`
+> (public repoda gitignore; sahibi private `kuresel-etki-secrets` deposunda yedekler).
 >
 > **Teknoloji:** Saf HTML + CSS + JavaScript (framework yok, build yok).  
 > Global: `window.GAME`. Script sırası `index.html` içinde: data → core → ui (mobile → main).

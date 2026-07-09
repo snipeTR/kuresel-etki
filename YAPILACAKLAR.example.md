@@ -1,8 +1,9 @@
 # KÜRESEL ETKİ — Açık yapılacaklar (örnek / herkese açık)
 
 > Kalıcı kurallar: [`AGENTS.md`](AGENTS.md)  
-> Gerçek sunucu IP, SSH anahtarı ve kişisel yollar bu repoda **yoktur**.  
-> Yerel kopyanda `YAPILACAKLAR.md` oluşturup gizli bilgileri oraya yaz (gitignore’da).
+> Gerçek sunucu IP, SSH anahtarı ve kişisel yollar bu **public** repoda **yoktur**.  
+> Yerel kopyanda `YAPILACAKLAR.md` tut (gitignore’da).  
+> Sahiplik yedeği: private repo `kuresel-etki-secrets` (yalnızca repo sahibi erişir; public’e eklenmez).
 
 ## Yerel not (kendin doldur)
 
