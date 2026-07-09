@@ -13,6 +13,21 @@ _(Boş — sıradaki iş buraya)_
 
 ---
 
+## 2026-07-10 — GitHub deploy script + full server deploy
+
+### Deploy
+- Private repo `deploy/`: `setup-git-auth.sh`, `deploy-from-github.sh`, `bootstrap-server.sh`, nginx deny snippet.
+- Sunucu: `git` + `rsync` kuruldu; private repo için **deploy key** (`id_ed25519_github_secrets`).
+- Script public `global-impact` + private `kuresel-etki-secrets` çeker, `/var/www/html/oyungrok` birleştirir.
+- Gizli dosyalar sunucuda da yüklü; **HTTP 403** (`YAPILACAKLAR.md`, `ssh/*`) — oyun dosyaları 200.
+- Public sarmalayıcı: `tools/deploy-from-github.sh`.
+
+### Not
+- Deploy key tek repoya özel (GitHub kuralı); public HTTPS, private SSH key.
+- ASLA `/oyun/` path.
+
+---
+
 ## 2026-07-10 — Repo rename, dil UI, CHANGELOG, GitHub-first
 
 ### Depo
