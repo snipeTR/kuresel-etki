@@ -37,7 +37,7 @@
   </div>
   <p class="menu-mission" data-i18n="ui.menu_mission">Misyon: Ekonomik enstrümanların zincirleme etkilerini anlamak. Kazanmak değil; her kararın dünya üzerindeki izini görmek.</p>
   <!-- Sağ alt: 3 harfli dil seçimi (TR / EN …) -->
-  <div id="lang-switcher" class="lang-switcher lang-switcher-br" aria-label="Language"></div>
+  <div id="lang-switcher" data-lang-switcher class="lang-switcher lang-switcher-br" aria-label="Language"></div>
 </div>
 
 <!-- ============ NASIL OYNANIR ============ -->
@@ -81,7 +81,6 @@
       <span id="hdr-date" class="hdr-date"></span>
       <button id="btn-help" class="btn btn-small" data-i18n="ui.help" data-i18n-title="ui.help_title">❓ Yardım</button>
       <button id="btn-music" class="btn btn-small" type="button" data-i18n-title="ui.music_title_40">🔉 40%</button>
-      <button id="btn-lang-game" class="btn btn-small" type="button" title="Language">🌐</button>
     </div>
     <div class="hdr-right">
       <span id="hdr-polcap" data-i18n-title="ui.polcap">🏛 <b>—</b></span>
@@ -141,7 +140,6 @@
         <span id="m-hdr-slots">Müdahale —</span>
         <button type="button" id="m-btn-help" class="btn btn-small">❓</button>
         <button type="button" id="m-btn-music" class="btn btn-small" data-i18n-title="ui.music_title_40">🔉 40%</button>
-        <button type="button" id="m-btn-lang" class="btn btn-small" title="Language">🌐</button>
         <button type="button" id="m-btn-log" class="btn btn-small" data-i18n="ui.log_short">Günlük</button>
         <button type="button" id="m-btn-commit" class="btn btn-primary btn-small" data-i18n="ui.commit_short">İlerle ▶</button>
       </div>
@@ -184,7 +182,11 @@
       </div>
       <button type="button" id="m-nav-next" class="btn m-nav-btn" data-i18n-title="ui.next_tab">▶</button>
     </nav>
+    <!-- Mobil: dil seçici pencere içi sağ alt (nav üstü) -->
+    <div id="lang-switcher-mobile" data-lang-switcher class="lang-switcher lang-switcher-inwindow lang-switcher-mobile" aria-label="Language"></div>
   </div>
+  <!-- Masaüstü: dil seçici oyun penceresi sağ alt -->
+  <div id="lang-switcher-game" data-lang-switcher class="lang-switcher lang-switcher-inwindow lang-switcher-desktop" aria-label="Language"></div>
 </div>
 
 <!-- ============ OYUN SONU ============ -->

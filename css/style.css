@@ -47,11 +47,28 @@ h1,h2,h3{font-weight:bold;}
   background:var(--face); border:2px solid; border-color:#ffffff #404040 #404040 #ffffff;
   box-shadow:4px 4px 0 rgba(0,0,0,.35); border-radius:0;}
 
-/* ---- Dil seçici (ana menü sağ alt, 3 harfli select) ---- */
+/* ---- Dil seçici (3 harfli select; menü / oyun penceresi sağ alt) ---- */
 .lang-switcher-br{
   position:absolute; right:14px; bottom:12px; z-index:5;
   margin:0; display:block;
 }
+/* Oyun ekranı: pencere içi sağ alt (masaüstü + mobil host) */
+#screen-game{ position:relative; }
+.lang-switcher-inwindow{
+  position:absolute; right:10px; bottom:10px; z-index:60;
+  margin:0; display:block; pointer-events:auto;
+}
+/* Masaüstü: instrument bar üstünde biraz boşluk */
+.lang-switcher-desktop{ bottom: 78px; right: 12px; }
+body.mobile-ui .lang-switcher-desktop{ display:none !important; }
+/* Mobil kabuk içi sağ alt (alt nav üstü) */
+#mobile-chrome{ position:relative; }
+.lang-switcher-mobile{
+  right: 10px;
+  bottom: 58px; /* bottom nav üstü */
+  z-index: 70;
+}
+body:not(.mobile-ui) .lang-switcher-mobile{ display:none !important; }
 .lang-select{
   font-family:Tahoma, "MS Sans Serif", sans-serif;
   font-size:12px; font-weight:bold; letter-spacing:0.5px;

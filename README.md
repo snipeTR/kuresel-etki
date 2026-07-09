@@ -14,7 +14,7 @@ Büyük bir küresel felaket sonrası seçtiğin ülkeyi **yalnızca ekonomik en
 | **Süre** | 60 tur ≈ 15 yıl (1 tur = 3 ay / 1 çeyrek) |
 | **İçerik** | 17 ülke · 48 enstrüman · 10 felaket · AI rakip ülkeler |
 | **Diller** | Türkçe + English (`lang/` modüler paketler; menüde **TR/EN** dropdown) |
-| **Repo (public)** | [github.com/snipeTR/kuresel-etki](https://github.com/snipeTR/kuresel-etki) |
+| **Repo (public)** | [github.com/snipeTR/global-impact](https://github.com/snipeTR/global-impact) |
 | **Gizli notlar** | Private: [kuresel-etki-secrets](https://github.com/snipeTR/kuresel-etki-secrets) *(yalnız yetkili erişim)* |
 
 ---
@@ -40,7 +40,8 @@ Bu bölüm **hiç kod bilmeden** oynamak içindir.
 ## 1.0 Dil seçimi
 
 - Ana menü **sağ altta** açılır liste: **TR** / **EN** (3 harfli kod).
-- Oyun içinde üst barda **🌐** ile dil döngüsü.
+- **Masaüstü oyun:** pencere **içinde sağ alt** aynı select.
+- **Mobil:** mobil pencere **içinde sağ alt** (alt sekmelerin üstü).
 - Seçim tarayıcıda hatırlanır (`keLang_oyungrok`).
 
 ## 1.1 Oyunu nasıl açarım?
@@ -273,8 +274,8 @@ Bağımlılık yöneticisi yok: **npm install yok**, bundler yok, framework yok.
 ## 2.2 Çalıştırma
 
 ```bash
-git clone https://github.com/snipeTR/kuresel-etki.git
-cd kuresel-etki
+git clone https://github.com/snipeTR/global-impact.git
+cd global-impact
 node serve.js
 # → http://localhost:8123
 ```
@@ -297,7 +298,7 @@ node serve.js
 ## 2.4 Proje ağacı
 
 ```text
-kuresel-etki/
+global-impact/
 ├── index.html              # Tüm ekranlar + #mobile-chrome kabuğu
 ├── css/style.css           # Win95 tema + body.mobile-ui
 ├── lang/                   # i18n çekirdek + tr/ + en/
@@ -534,7 +535,7 @@ git commit -m "açıklama"
 git push
 ```
 
-Repo: https://github.com/snipeTR/kuresel-etki
+Repo: https://github.com/snipeTR/global-impact
 
 ## 2.13 Bilinen açık işler (örnek)
 
@@ -572,7 +573,7 @@ Repo: https://github.com/snipeTR/kuresel-etki
 |--|--|
 | Repo | `snipeTR/kuresel-etki-secrets` (**private**) |
 | Ne var? | Deploy URL/path, SSH notları, `ssh/*.key`, açık gizli todo |
-| Ne yok? | Oyun kaynak kodu (o public `kuresel-etki`’de) |
+| Ne yok? | Oyun kaynak kodu (o public `global-impact`’de) |
 | Kural | Private içeriği **asla** public commit / issue / chat’e yapıştırma |
 | Deploy hedefi | Yalnız `/oyungrok/` — **`/oyun/` dokunma** (notlar private dosyada) |
 
@@ -743,8 +744,9 @@ Daha fazlası: kod yorumları + **AGENTS.md** bölüm 1–10.
 | Oyna (lokal) | `node serve.js` → http://localhost:8123 |
 | Kurallar (kalıcı) | [AGENTS.md](AGENTS.md) |
 | Todo şablonu | [YAPILACAKLAR.example.md](YAPILACAKLAR.example.md) |
+| Changelog | [CHANGELOG.md](CHANGELOG.md) |
 | English README | [README-EN.md](README-EN.md) |
-| GitHub (public) | https://github.com/snipeTR/kuresel-etki |
+| GitHub (public) | https://github.com/snipeTR/global-impact |
 | Secrets (private, yetkili) | https://github.com/snipeTR/kuresel-etki-secrets |
 | §1 Kullanıcı | [Basit kullanıcılar](#1-basit-kullanıcılar) |
 | §2 Geliştirici | [Programcılar](#2-programcılar) |

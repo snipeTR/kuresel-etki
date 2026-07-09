@@ -193,19 +193,20 @@ Konsolda: `GAME.countNewsTemplates()`, `GAME.testInstrumentPaging()`.
 
 ## 10. Ajan çalışma kuralları
 
-1. Önce `AGENTS.md` (bu dosya).
-2. Gizli deploy / SSH / todo:
+1. Önce `AGENTS.md` (bu dosya) ve **[CHANGELOG.md](CHANGELOG.md)**.
+2. **Kaynak gerçeği:** public GitHub `snipeTR/global-impact` (Küresel Etki / Global Impact). Yerel klasör yalnızca clone/workspace.
+3. Gizli deploy / SSH / todo:
    - Yerel `YAPILACAKLAR.md` varsa oku.
-   - **Git erişimi varsa** private repo: `https://github.com/snipeTR/kuresel-etki-secrets`
+   - **Git erişimi varsa** private: `https://github.com/snipeTR/kuresel-etki-secrets`
      (`YAPILACAKLAR.md`, `ssh/*`). Public’e sızdırma.
    - Yoksa yalnızca `YAPILACAKLAR.example.md`.
-3. Çalışma kökü: `grok-projeler/ekonomi oyunu` (Documents altındaki kopya değilse kullanıcı belirtir).
 4. **Enstrüman silme.** Canlıda yalnız `/oyungrok/` — **`/oyun/` yazma**.
 5. Masaüstü düzenini bozmadan mobil değişiklikleri `body.mobile-ui` / media ile sınırla.
 6. Kayıt anahtarlarına `_oyungrok` soneki zorunlu (çakışma olmasın).
 7. Tur script modelini basitleştirip “sadece AIIndex”e geri alma — kullanıcı v2’yi istedi.
 8. Biten işleri YAPILACAKLAR açık listesinden çıkar; yeni kalıcı kuralı buraya yaz.
 9. Dokümantasyon: `README.md` (TR) + `README-EN.md` (EN).
+10. **CHANGELOG zorunlu:** Her anlamlı değişiklikten sonra `CHANGELOG.md` üstüne tarihli madde ekle (ne / neden / dosyalar). Ajanlar ve sonraki oturumlar buradan tarih okur.
 
 ---
 
@@ -220,8 +221,9 @@ lang/
 
 - **localStorage:** `keLang_oyungrok` (dil tercihi).
 - **API:** `GAME.t('ui.new_game')`, `GAME.i18n.setLang('en')`, `GAME.aiMsg(key, vars)`.
+- **UI host:** `[data-lang-switcher]` — menü sağ alt + masaüstü oyun penceresi sağ alt + mobil kabuk sağ alt (3 harfli select).
 - **Paket bölümleri:** `ui`, `instruments`, `countries`, `disasters`, `layers`, `groups`, `globals`, `indMeta`, `toneMeta`, `newsCats`, `diplo`, `econTitle`, `econBody`, `globalTitle`, `globalBody`, `risk`, `events`, `projectDone`, `projectProg`, `detection*`, `disasterFlavor`, `help`, `about`, `chartSeries`, `ai`, `gov`.
 - **gov kodları çevrilmez** (`demokratik` / `otoriter` / `hibrit` / `birlik`) — görünen etiket `GAME.govLabel(gov)`.
-- Yeni dil eklemek: `lang/<kod>/pack.js` yaz → `GAME.i18n.supported` listesine ekle → `index.html` script tag.
+- Yeni dil eklemek: `lang/<kod>/pack.js` yaz → `GAME.i18n.supported` (`short: 'XX'`) → `index.html` script tag.
 - Yeni UI metni: `data-i18n` veya `GAME.t('ui.…')` + her dil paketinde anahtar.
-- `tools/build-lang-tr.js` / `tools/build-lang-en.js` paket üretici yardımcılarıdır (zorunlu runtime değil).
+- `tools/build-lang-*.js` paket üretici (runtime zorunlu değil).

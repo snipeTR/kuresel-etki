@@ -10,8 +10,7 @@ GAME.showScreen = function (id) {
 GAME.renderMenu = function () {
   document.getElementById('btn-continue').disabled = !GAME.hasSave();
   if (GAME.i18n && GAME.i18n.applyDom) GAME.i18n.applyDom();
-  const sw = document.getElementById('lang-switcher');
-  if (sw && GAME.i18n && GAME.i18n.renderLangSwitcher) GAME.i18n.renderLangSwitcher(sw);
+  if (GAME.i18n && GAME.i18n.renderAllLangSwitchers) GAME.i18n.renderAllLangSwitchers();
   GAME.showScreen('screen-menu');
 };
 
@@ -95,6 +94,7 @@ GAME.showDisasterScreen = function (dis, onContinue) {
 GAME.startGameScreen = function () {
   GAME.checkViewport();
   GAME.showScreen('screen-game');
+  if (GAME.i18n && GAME.i18n.renderAllLangSwitchers) GAME.i18n.renderAllLangSwitchers();
   if (GAME.syncMobileChrome) GAME.syncMobileChrome();
   if (GAME.Music && GAME.Music.onGameStart) GAME.Music.onGameStart();
   // Açılış mesajları (ilk turda)

@@ -321,16 +321,17 @@ GAME.i18n = {
   },
 
   /**
-   * Ana menü dil seçici: sağ alt, 3 harfli kodlarla <select> (TR / EN …)
+   * Dil seçici: 3 harfli kodlarla <select> (TR / EN …)
+   * container: menü / masaüstü oyun / mobil pencere içi host
    */
   renderLangSwitcher: function (container) {
     if (!container) return;
     const self = this;
     container.innerHTML = '';
-    container.classList.add('lang-switcher', 'lang-switcher-br');
+    container.classList.add('lang-switcher');
 
     const sel = document.createElement('select');
-    sel.id = 'lang-select';
+    sel.id = (container.id || 'lang') + '-select';
     sel.className = 'lang-select';
     sel.setAttribute('aria-label', 'Language');
     sel.title = 'Language';
@@ -338,7 +339,6 @@ GAME.i18n = {
     this.supported.forEach(L => {
       const opt = document.createElement('option');
       opt.value = L.code;
-      // 3 harfli kod (yoksa code uppercase)
       opt.textContent = (L.short || String(L.code).toUpperCase().slice(0, 3));
       opt.title = L.label || L.code;
       if (L.code === self.lang) opt.selected = true;
@@ -351,6 +351,14 @@ GAME.i18n = {
     };
 
     container.appendChild(sel);
+  },
+
+  /** Tüm data-lang-switcher host’larını doldur */
+  renderAllLangSwitchers: function () {
+    const self = this;
+    document.querySelectorAll('[data-lang-switcher]').forEach(function (el) {
+      self.renderLangSwitcher(el);
+    });
   },
 
   init: function () {
@@ -426,4 +434,5 @@ GAME.afterLangChange = function () {
     if (end && end.classList.contains('active')) GAME.showEndScreen();
   }
   if (GAME.Music && GAME.Music.updateButtons) GAME.Music.updateButtons();
+  if (GAME.i18n && GAME.i18n.renderAllLangSwitchers) GAME.i18n.renderAllLangSwitchers();
 };

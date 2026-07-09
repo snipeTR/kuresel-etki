@@ -230,20 +230,8 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('btn-commit').onclick = GAME.confirmCommitTurn;
   document.getElementById('btn-help').onclick = GAME.openHelpModal;
 
-  /* Dil değiştir (oyun içi 🌐) */
-  const cycleLang = () => {
-    if (!GAME.i18n) return;
-    const list = GAME.i18n.supported || [];
-    if (!list.length) return;
-    const cur = GAME.i18n.getLang();
-    const idx = list.findIndex(L => L.code === cur);
-    const next = list[(idx + 1) % list.length];
-    GAME.i18n.setLang(next.code);
-  };
-  const btnLang = document.getElementById('btn-lang-game');
-  if (btnLang) btnLang.onclick = cycleLang;
-  const mBtnLang = document.getElementById('m-btn-lang');
-  if (mBtnLang) mBtnLang.onclick = cycleLang;
+  /* Dil seçiciler (menü + masaüstü oyun + mobil pencere) */
+  if (GAME.i18n && GAME.i18n.renderAllLangSwitchers) GAME.i18n.renderAllLangSwitchers();
 
   /* mIRC paneli aç/kapa */
   document.getElementById('btn-feed-toggle').onclick = () => GAME.toggleFeed(true);

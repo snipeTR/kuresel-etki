@@ -14,7 +14,7 @@ After a major global disaster you govern your chosen country using **economic in
 | **Length** | 60 turns ≈ 15 years (1 turn = 3 months / 1 quarter) |
 | **Content** | 17 countries · 48 instruments · 10 disasters · AI rivals |
 | **Languages** | Turkish + English (`lang/` modular packs; main menu **TR/EN** dropdown) |
-| **Repo (public)** | [github.com/snipeTR/kuresel-etki](https://github.com/snipeTR/kuresel-etki) |
+| **Repo (public)** | [github.com/snipeTR/global-impact](https://github.com/snipeTR/global-impact) |
 | **Secrets** | Private: [kuresel-etki-secrets](https://github.com/snipeTR/kuresel-etki-secrets) *(authorized access only)* |
 
 ---
@@ -40,7 +40,8 @@ No coding required.
 ## 1.0 Language
 
 - Main menu **bottom-right** dropdown: **TR** / **EN** (3-letter codes).
-- In-game **🌐** cycles language.
+- **Desktop game:** same select **inside the game window**, bottom-right.
+- **Mobile:** same select **inside the mobile chrome**, bottom-right (above tab bar).
 - Preference stored in the browser (`keLang_oyungrok`).
 
 ## 1.1 How to run
@@ -167,8 +168,8 @@ Own performance · global stability · legacy power · strategic consistency · 
 Modern browser; optional **Node.js** 18+ for `serve.js` / tests. No npm install.
 
 ```bash
-git clone https://github.com/snipeTR/kuresel-etki.git
-cd kuresel-etki
+git clone https://github.com/snipeTR/global-impact.git
+cd global-impact
 node serve.js
 # → http://localhost:8123
 ```
@@ -189,7 +190,7 @@ node serve.js
 ## 2.3 Project tree
 
 ```text
-kuresel-etki/
+global-impact/
 ├── index.html
 ├── css/style.css
 ├── lang/                   # i18n
@@ -280,7 +281,7 @@ See `YAPILACAKLAR.example.md` (balancing, chart overlays, optional “what if”
 |--|--|
 | Repo | `snipeTR/kuresel-etki-secrets` (**private**) |
 | Contents | Deploy URL/path, SSH notes, `ssh/*.key`, private todos |
-| Not in there | Game source (lives in public `kuresel-etki`) |
+| Not in there | Game source (lives in public `global-impact`) |
 | Rule | **Never** paste private contents into public commits, issues, or chats |
 | Deploy target | Only **`/oyungrok/`** — **never** write to `/oyun/` (details in private file) |
 | Public web | Do not publish `YAPILACAKLAR.md` or keys under the web root |
@@ -353,8 +354,9 @@ Small diffs · read before write · keep UI strings via i18n packs · don’t �
 | Play (local) | `node serve.js` → http://localhost:8123 |
 | Rules | [AGENTS.md](AGENTS.md) |
 | Todo template | [YAPILACAKLAR.example.md](YAPILACAKLAR.example.md) |
+| Changelog | [CHANGELOG.md](CHANGELOG.md) |
 | Turkish README | [README.md](README.md) |
-| GitHub (public) | https://github.com/snipeTR/kuresel-etki |
+| GitHub (public) | https://github.com/snipeTR/global-impact |
 | Secrets (private, authorized) | https://github.com/snipeTR/kuresel-etki-secrets |
 | §1 Players | [Players](#1-players-end-users) |
 | §2 Devs | [Programmers](#2-programmers) |

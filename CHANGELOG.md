@@ -1,0 +1,96 @@
+# CHANGELOG — Global Impact (Küresel Etki)
+
+> **Kural (ajanlar / geliştiriciler):** Her anlamlı kod veya dokümantasyon değişikliğinden sonra bu dosyaya **yeni bir madde** ekleyin (tarih + kısa açıklama).  
+> En yeni girişler **üstte** (ters kronolojik).  
+> Public repo: https://github.com/snipeTR/global-impact  
+> Gizli notlar: private `snipeTR/kuresel-etki-secrets` (public’e sızdırma).
+
+---
+
+## [Unreleased]
+
+_(Boş — sıradaki iş buraya)_
+
+---
+
+## 2026-07-10 — Repo rename, dil UI, CHANGELOG, GitHub-first
+
+### Depo
+- Public GitHub repo adı **`kuresel-etki` → `global-impact`** (Küresel Etki / Global Impact).
+- Çalışma kaynağı: **GitHub ana repo**; yerel kopya yalnızca clone/workspace.
+- Tüm public kaynak dosyalar repoda (müzik, lang, tools, agent.md dahil). `YAPILACAKLAR.md` bilerek gitignore (sırlar private repoda).
+
+### Dil seçici UI
+- Ana menü sağ alt: 3 harfli **TR/EN** `<select>` (önceki oturum).
+- **Masaüstü oyun:** dil kutusu oyun penceresi **içinde sağ alt**.
+- **Mobil:** dil kutusu mobil kabuk **içinde sağ alt** (alt nav üstü).
+- Header **🌐** butonları kaldırıldı; tek tip select.
+
+### Dokümantasyon
+- `CHANGELOG.md` oluşturuldu; ajanların değişiklik kaydı zorunluluğu `AGENTS.md` + README ajan bölümüne eklendi.
+- `README.md` / `README-EN.md` / `AGENTS.md` repo URL güncellemeleri (`global-impact`).
+
+---
+
+## 2026-07-09 — Oturum özeti (bu sohbetin başından)
+
+### i18n (çoklu dil)
+- `lang/i18n.js` çekirdeği: `GAME.t`, `setLang`, `applyAll`, paket register.
+- `lang/tr/pack.js` + `lang/en/pack.js` (UI, enstrüman, ülke, felaket, haber, help, AI mesajları).
+- `localStorage` anahtarı: `keLang_oyungrok`.
+- UI ve veri metinleri dil paketlerinden; `gov` kod anahtarları çevrilmez.
+- Araçlar: `tools/build-lang-tr.js`, `tools/build-lang-en.js`, `tools/patch-intro-ui.js`.
+
+### Dil seçici (önceki adım)
+- Menüde bayrak butonları yerine **3 harfli dropdown** (TR/EN), sağ alt.
+
+### README / docs
+- README üç kademe (kullanıcı / programcı / ajan) genişletildi.
+- `README-EN.md` eklendi; TR README başına EN linki.
+- Ajan bölümünde private secrets repo okuma talimatı.
+
+### Private secrets
+- Private repo: `snipeTR/kuresel-etki-secrets`.
+- İçerik: `YAPILACAKLAR.md`, `ssh/` (private+public key yedek).
+- Public repoda `YAPILACAKLAR.md` gitignore; `YAPILACAKLAR.example.md` şablon.
+
+### Deploy / sunucu (oyungrok)
+- Canlı yol: `/var/www/html/oyungrok` — **`/oyun/` dokunulmaz**.
+- i18n dosyaları sunucuya yüklendi; web kökünden gizli `YAPILACAKLAR.md` silindi.
+
+### Oyun / mimari (oturum boyunca, özet)
+- Turn **v2**: AI script plan → gecikmeli replay; kesintide `preAi` + baştan.
+- localStorage sonekleri `*_oyungrok` (eski `/oyun/` kaydıyla çakışmasın).
+- 17 ülke; EU tek varlık; GBR ayrı; DEU yok.
+- 48 enstrüman (silme yok kuralı).
+- Mobil 9:16 sekmeler, swipe wrap, harita pan/pinch (sayfa zoom kapalı).
+- Harita ilişki renkli çizgiler; AB marker İspanya, label altta.
+- Müzik: normal → felaket fade → playlist; ses 0 / 40% / 100%.
+- Tur onay modalı; mobilde Olaylar sekmesine atlama.
+- Haber şablonları 80+; `test-consistency.js`.
+- `AGENTS.md` kalıcı kurallar; açık todo private/local.
+
+### Git
+- Public history: initial commit → README → i18n → dil UI → docs/private secrets → README-EN → (bu sürüm).
+
+---
+
+## Nasıl giriş eklenir? (ajan şablonu)
+
+```markdown
+## YYYY-MM-DD — Kısa başlık
+
+- Ne değişti (1–5 madde)
+- Etkilenen dosyalar (özet)
+- Kırıcı değişiklik / migrate notu (varsa)
+```
+
+Örnek:
+
+```markdown
+## 2026-07-11 — Enstrüman X eklendi
+
+- `instruments.js`: `new_tool` (layer 2, slider)
+- `lang/tr/pack.js` + `lang/en/pack.js`: name/desc
+- CHANGELOG bu madde
+```
