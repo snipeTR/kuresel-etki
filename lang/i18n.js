@@ -11,10 +11,10 @@ GAME.i18n = {
   lang: 'tr',
   /** @type {Record<string, Record<string, any>>} lang → section → data */
   packs: {},
-  /** Desteklenen diller (UI seçici) */
+  /** Desteklenen diller (UI seçici: short = 3 harfli kod, menü dropdown) */
   supported: [
-    { code: 'tr', label: 'Türkçe', flag: '🇹🇷' },
-    { code: 'en', label: 'English', flag: '🇬🇧' }
+    { code: 'tr', short: 'TR', label: 'Türkçe', flag: '🇹🇷' },
+    { code: 'en', short: 'EN', label: 'English', flag: '🇬🇧' }
   ],
   /** Snapshot: ilk yüklemede TR veri dosyalarından (fallback) */
   _baseline: null,
@@ -320,21 +320,37 @@ GAME.i18n = {
     this.applyDom();
   },
 
-  /** Dil seçici HTML (menü / ayar) */
+  /**
+   * Ana menü dil seçici: sağ alt, 3 harfli kodlarla <select> (TR / EN …)
+   */
   renderLangSwitcher: function (container) {
     if (!container) return;
     const self = this;
     container.innerHTML = '';
-    container.classList.add('lang-switcher');
+    container.classList.add('lang-switcher', 'lang-switcher-br');
+
+    const sel = document.createElement('select');
+    sel.id = 'lang-select';
+    sel.className = 'lang-select';
+    sel.setAttribute('aria-label', 'Language');
+    sel.title = 'Language';
+
     this.supported.forEach(L => {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'btn btn-small lang-btn' + (L.code === self.lang ? ' active' : '');
-      b.textContent = L.flag + ' ' + L.label;
-      b.setAttribute('data-lang', L.code);
-      b.onclick = function () { self.setLang(L.code); };
-      container.appendChild(b);
+      const opt = document.createElement('option');
+      opt.value = L.code;
+      // 3 harfli kod (yoksa code uppercase)
+      opt.textContent = (L.short || String(L.code).toUpperCase().slice(0, 3));
+      opt.title = L.label || L.code;
+      if (L.code === self.lang) opt.selected = true;
+      sel.appendChild(opt);
     });
+
+    sel.onchange = function () {
+      const code = sel.value;
+      if (code && code !== self.lang) self.setLang(code);
+    };
+
+    container.appendChild(sel);
   },
 
   init: function () {
