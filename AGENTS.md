@@ -193,13 +193,19 @@ Konsolda: `GAME.countNewsTemplates()`, `GAME.testInstrumentPaging()`.
 
 ## 10. Ajan çalışma kuralları
 
-1. Önce `AGENTS.md` (bu dosya), sonra `YAPILACAKLAR.md` (gizli + açık todo).
-2. Çalışma kökü: `grok-projeler/ekonomi oyunu` (Documents altındaki kopya değilse kullanıcı belirtir).
-3. **Enstrüman silme.** `/oyun/` canlı klasörüne yazma.
-4. Masaüstü düzenini bozmadan mobil değişiklikleri `body.mobile-ui` / media ile sınırla.
-5. Kayıt anahtarlarına `_oyungrok` soneki zorunlu (çakışma olmasın).
-6. Tur script modelini basitleştirip “sadece AIIndex”e geri alma — kullanıcı v2’yi istedi.
-7. Biten işleri YAPILACAKLAR açık listesinden çıkar; yeni kalıcı kuralı buraya yaz.
+1. Önce `AGENTS.md` (bu dosya).
+2. Gizli deploy / SSH / todo:
+   - Yerel `YAPILACAKLAR.md` varsa oku.
+   - **Git erişimi varsa** private repo: `https://github.com/snipeTR/kuresel-etki-secrets`
+     (`YAPILACAKLAR.md`, `ssh/*`). Public’e sızdırma.
+   - Yoksa yalnızca `YAPILACAKLAR.example.md`.
+3. Çalışma kökü: `grok-projeler/ekonomi oyunu` (Documents altındaki kopya değilse kullanıcı belirtir).
+4. **Enstrüman silme.** Canlıda yalnız `/oyungrok/` — **`/oyun/` yazma**.
+5. Masaüstü düzenini bozmadan mobil değişiklikleri `body.mobile-ui` / media ile sınırla.
+6. Kayıt anahtarlarına `_oyungrok` soneki zorunlu (çakışma olmasın).
+7. Tur script modelini basitleştirip “sadece AIIndex”e geri alma — kullanıcı v2’yi istedi.
+8. Biten işleri YAPILACAKLAR açık listesinden çıkar; yeni kalıcı kuralı buraya yaz.
+9. Dokümantasyon: `README.md` (TR) + `README-EN.md` (EN).
 
 ---
 

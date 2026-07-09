@@ -1,5 +1,7 @@
 # KÜRESEL ETKİ
 
+> **English:** [README-EN.md](README-EN.md) · **Türkçe (bu dosya)**
+
 **Sıra tabanlı ekonomik devlet yönetimi simülasyonu.**  
 Büyük bir küresel felaket sonrası seçtiğin ülkeyi **yalnızca ekonomik enstrümanlarla** yönetirsin. Her faiz, yaptırım veya projenin kısa / orta / uzun vadede tüm dünyaya nasıl yayıldığını görürsün.
 
@@ -11,8 +13,9 @@ Büyük bir küresel felaket sonrası seçtiğin ülkeyi **yalnızca ekonomik en
 | **Platform** | Masaüstü tarayıcı + mobil dikey (9:16 sekmeli arayüz) |
 | **Süre** | 60 tur ≈ 15 yıl (1 tur = 3 ay / 1 çeyrek) |
 | **İçerik** | 17 ülke · 48 enstrüman · 10 felaket · AI rakip ülkeler |
-| **Diller** | Türkçe + English (`lang/` modüler paketler) |
-| **Repo** | [github.com/snipeTR/kuresel-etki](https://github.com/snipeTR/kuresel-etki) |
+| **Diller** | Türkçe + English (`lang/` modüler paketler; menüde **TR/EN** dropdown) |
+| **Repo (public)** | [github.com/snipeTR/kuresel-etki](https://github.com/snipeTR/kuresel-etki) |
+| **Gizli notlar** | Private: [kuresel-etki-secrets](https://github.com/snipeTR/kuresel-etki-secrets) *(yalnız yetkili erişim)* |
 
 ---
 
@@ -22,10 +25,11 @@ Büyük bir küresel felaket sonrası seçtiğin ülkeyi **yalnızca ekonomik en
 |-------|-------------|-------------|
 | **[1. Basit kullanıcılar](#1-basit-kullanıcılar)** | Sadece oynamak isteyenler | Kurulum, kurallar, ekranlar, ipuçları, SSS |
 | **[2. Programcılar](#2-programcılar)** | Kod okuyan / katkı yapanlar | Mimari, veri modelleri, enstrüman ekleme, test |
-| **[3. Yapay zekâ ajanları](#3-yapay-zekâ-ajanları)** | LLM / agent araçları | Dokunulmaz kurallar, API haritası, checklist |
+| **[3. Yapay zekâ ajanları](#3-yapay-zekâ-ajanları)** | LLM / agent araçları | Dokunulmaz kurallar, API haritası, gizli repo, checklist |
 
 Kalıcı / değişmez kurallar (kaynak): **[AGENTS.md](AGENTS.md)**  
-Açık todo şablonu: **[YAPILACAKLAR.example.md](YAPILACAKLAR.example.md)**
+Açık todo şablonu: **[YAPILACAKLAR.example.md](YAPILACAKLAR.example.md)**  
+English README: **[README-EN.md](README-EN.md)**
 
 ---
 
@@ -35,9 +39,9 @@ Bu bölüm **hiç kod bilmeden** oynamak içindir.
 
 ## 1.0 Dil seçimi
 
-- Ana menüde **Türkçe / English** butonları.
-- Oyun içinde üst barda **🌐** ile dil değiştirilir.
-- Seçim tarayıcıda hatırlanır.
+- Ana menü **sağ altta** açılır liste: **TR** / **EN** (3 harfli kod).
+- Oyun içinde üst barda **🌐** ile dil döngüsü.
+- Seçim tarayıcıda hatırlanır (`keLang_oyungrok`).
 
 ## 1.1 Oyunu nasıl açarım?
 
@@ -285,9 +289,9 @@ node serve.js
 | `lang/tr/pack.js` | Türkçe paket (varsayılan) |
 | `lang/en/pack.js` | İngilizce paket |
 
-- Ana menüde dil butonları; oyun içinde 🌐 ile döngü.
+- Ana menü sağ alt: `<select>` ile **TR / EN**.
 - Tercih: `localStorage` → `keLang_oyungrok`.
-- Yeni dil: `lang/<kod>/pack.js` + `GAME.i18n.supported` + `index.html` script.
+- Yeni dil: `lang/<kod>/pack.js` + `GAME.i18n.supported` (+ `short: 'XX'`) + `index.html` script.
 - Ayrıntı: [AGENTS.md §11](AGENTS.md).
 
 ## 2.4 Proje ağacı
@@ -323,9 +327,11 @@ kuresel-etki/
 ├── test-consistency.js
 ├── serve.js
 ├── AGENTS.md               # Değişmez kurallar
-├── YAPILACAKLAR.example.md
-├── .gitignore              # YAPILACAKLAR.md gizli tutulur
-└── README.md               # Bu dosya
+├── YAPILACAKLAR.example.md # Public todo şablonu (gizli yok)
+├── README.md               # Türkçe (bu dosya)
+├── README-EN.md            # English
+├── .gitignore              # YAPILACAKLAR.md public repoda yok
+└── serve.js / test-consistency.js
 ```
 
 ## 2.5 Mimari kararlar
@@ -513,10 +519,11 @@ GAME.testInstrumentPaging()
 
 1. **Enstrüman silme.** Eksik araç eklenebilir.  
 2. Masaüstü düzenini bozmadan mobil stilleri `body.mobile-ui` altında tut.  
-3. Gizli sunucu / SSH / kişisel path **asla** commit etme.  
-4. `YAPILACAKLAR.md` gitignore’dadır — şablon için `YAPILACAKLAR.example.md` kullan.  
-5. Kalıcı davranış kuralı → `AGENTS.md`; açık iş → yerel todo.  
-6. Framework / build pipeline ekleme (açık talep olmadıkça).
+3. Gizli sunucu / SSH / kişisel path **asla** bu **public** repoya commit etme.  
+4. `YAPILACAKLAR.md` gitignore’dadır — şablon: `YAPILACAKLAR.example.md`.  
+5. Gizli yedek (yetkili): private **[kuresel-etki-secrets](https://github.com/snipeTR/kuresel-etki-secrets)** (`YAPILACAKLAR.md`, `ssh/*`).  
+6. Kalıcı davranış kuralı → `AGENTS.md`; açık iş → yerel / private todo.  
+7. Framework / build pipeline ekleme (açık talep olmadıkça).
 
 ### Git akışı
 
@@ -546,13 +553,28 @@ Repo: https://github.com/snipeTR/kuresel-etki
 
 ## 3.1 Oturum başlangıcı (zorunlu sıra)
 
-1. **[AGENTS.md](AGENTS.md)** — değişmez model (ülkeler, tur v2, UI, müzik, enstrüman).  
-2. **YAPILACAKLAR.md** (yerel, gitignore) varsa oku — gizli deploy + açık todo.  
-   Yoksa **YAPILACAKLAR.example.md**.  
+1. **[AGENTS.md](AGENTS.md)** — değişmez model (ülkeler, tur v2, UI, müzik, enstrüman, i18n).  
+2. **Gizli / deploy bilgisi (öncelik sırası):**  
+   - Yerel `YAPILACAKLAR.md` (gitignore; public clone’da yoktur).  
+   - **Git erişimin varsa** private repo:  
+     **https://github.com/snipeTR/kuresel-etki-secrets**  
+     (`YAPILACAKLAR.md`, `ssh/` anahtarları, deploy notları).  
+     `gh repo view snipeTR/kuresel-etki-secrets` veya clone ile oku.  
+   - Erişim yoksa yalnızca **[YAPILACAKLAR.example.md](YAPILACAKLAR.example.md)** (şablon; IP/SSH yok).  
 3. İlgili kaynak dosyayı oku (aşağıdaki harita).  
 4. Değişiklikten sonra checklist’i işaretle.
 
 **Çalışma kökü:** kullanıcının belirttiği `ekonomi oyunu` klasörü (genelde Documents `grok-projeler` altı). Yanlış kopyaya yazma.
+
+### 3.1.1 Private secrets repo (ajanlar)
+
+| | |
+|--|--|
+| Repo | `snipeTR/kuresel-etki-secrets` (**private**) |
+| Ne var? | Deploy URL/path, SSH notları, `ssh/*.key`, açık gizli todo |
+| Ne yok? | Oyun kaynak kodu (o public `kuresel-etki`’de) |
+| Kural | Private içeriği **asla** public commit / issue / chat’e yapıştırma |
+| Deploy hedefi | Yalnız `/oyungrok/` — **`/oyun/` dokunma** (notlar private dosyada) |
 
 ## 3.2 Dokunulmaz kısıtlar
 
@@ -721,7 +743,9 @@ Daha fazlası: kod yorumları + **AGENTS.md** bölüm 1–10.
 | Oyna (lokal) | `node serve.js` → http://localhost:8123 |
 | Kurallar (kalıcı) | [AGENTS.md](AGENTS.md) |
 | Todo şablonu | [YAPILACAKLAR.example.md](YAPILACAKLAR.example.md) |
-| GitHub | https://github.com/snipeTR/kuresel-etki |
+| English README | [README-EN.md](README-EN.md) |
+| GitHub (public) | https://github.com/snipeTR/kuresel-etki |
+| Secrets (private, yetkili) | https://github.com/snipeTR/kuresel-etki-secrets |
 | §1 Kullanıcı | [Basit kullanıcılar](#1-basit-kullanıcılar) |
 | §2 Geliştirici | [Programcılar](#2-programcılar) |
 | §3 Ajan | [Yapay zekâ ajanları](#3-yapay-zekâ-ajanları) |
