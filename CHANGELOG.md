@@ -13,6 +13,15 @@ _(Boş — sıradaki iş buraya)_
 
 ---
 
+## 2026-07-10 — Müzik: ayar %40 iken yeni oyunda çalmama
+
+- `unlock()` bitince `pause()` yeni oyunun `playFile` ile yarışıyordu → buton %40, ses yok.
+- `_playGen` + `ensurePlaying`; unlock aktif parçayı kesmez.
+- `onGameStart`: ayarlardan `volStep` oku → unlock → play → gecikmeli kick.
+- Menüde `bindUnlockOnce` state kalıntısıyla erken start yapmaz (yalnız screen-game active).
+
+---
+
 ## 2026-07-10 — Yardım/about metin uyumu (TR+EN) + tooltip i18n
 
 - `help.js` / `lang/*/pack.js`: makro escalate, FX maliyet 3, Sıfırla, yetersiz sermaye, chat hızı, sözlük, Ayarlar/gelişmiş, PNG bayraklar, tur v2.
