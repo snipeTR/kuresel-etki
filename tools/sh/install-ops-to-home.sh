@@ -126,14 +126,15 @@ PUBLIC_WORK="\${PUBLIC_WORK:-$PUBLIC_WORK}"
 echo "=== gi-ops status ==="
 echo "Host: \$(hostname)  \$(date -u +%Y-%m-%dT%H:%MZ)"
 echo "SSH:  \$(systemctl is-active ssh 2>/dev/null || systemctl is-active sshd 2>/dev/null || echo '?')"
-echo "Disk: \$(df -h / | awk 'NR==2{print \$3\" used \"\$5\" of \"\$2}')"
-echo "oyungrok: \$(test -f \"\$OYUNGROK/index.html\" && echo OK || echo MISSING)  \$OYUNGROK"
-echo "root /:   \$(test -f /var/www/html/index.html && echo OK || echo MISSING)"
-echo "oyun/:    \$(test -d /var/www/html/oyun && echo OK-dokunma || echo MISSING)"
-if [[ -d \"\$PUBLIC_WORK/.git\" ]]; then
-  echo "git HEAD: \$(git -C \"\$PUBLIC_WORK\" rev-parse --short HEAD 2>/dev/null || echo n/a)"
+DISK_LINE=\$(df -h / | awk 'NR==2 {print \$3 " used " \$5 " of " \$2}')
+echo "Disk: \$DISK_LINE"
+if [[ -f "\$OYUNGROK/index.html" ]]; then echo "oyungrok: OK  \$OYUNGROK"; else echo "oyungrok: MISSING  \$OYUNGROK"; fi
+if [[ -f /var/www/html/index.html ]]; then echo "root /:   OK"; else echo "root /:   MISSING"; fi
+if [[ -d /var/www/html/oyun ]]; then echo "oyun/:    OK (dokunma)"; else echo "oyun/:    MISSING"; fi
+if [[ -d "\$PUBLIC_WORK/.git" ]]; then
+  echo "git HEAD: \$(git -C "\$PUBLIC_WORK" rev-parse --short HEAD 2>/dev/null || echo n/a)"
 fi
-echo "sshd drop-in: \$(test -f /etc/ssh/sshd_config.d/99-gi-keepalive.conf && echo OK || echo yok)"
+if [[ -f /etc/ssh/sshd_config.d/99-gi-keepalive.conf ]]; then echo "sshd drop-in: OK"; else echo "sshd drop-in: yok"; fi
 echo "ops: $OPS_DIR"
 ls -la "$OPS_DIR"
 EOF
