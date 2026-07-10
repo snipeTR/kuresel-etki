@@ -94,44 +94,34 @@ if [[ "$YES" -ne 1 ]]; then
   esac
 fi
 
-# Sudo gerekebilir
-RSYNC=(rsync)
-if [[ ! -w "$DEST" ]]; then
+# Sudo: DEST root owned olabilir
+RUN=()
+if [[ ! -w "$DEST" ]] || [[ ! -w "$DEST/." ]]; then
   if command -v sudo >/dev/null 2>&1; then
-    RSYNC=(sudo rsync)
+    RUN=(sudo)
   else
     echo "HATA: $DEST yazılamıyor ve sudo yok."
     exit 1
   fi
 fi
 
-# Yalnız oyun statik dosyaları — DEST kökündeki oyun/ ve oyungrok/ dizinlerine girilmez
-"${RSYNC[@]}" -a \
-  --exclude 'oyun/' \
-  --exclude 'oyungrok/' \
-  "$SOURCE/index.html" "$DEST/index.html"
+# Yalnız oyun statik dosyaları — oyun/ ve oyungrok/ dizinlerine girilmez
+"${RUN[@]}" rsync -a "$SOURCE/index.html" "$DEST/index.html"
 
 for dir in css js lang assets music; do
   if [[ -d "$SOURCE/$dir" ]]; then
-    mkdir -p "$DEST/$dir" 2>/dev/null || sudo mkdir -p "$DEST/$dir"
-    "${RSYNC[@]}" -a --delete "$SOURCE/$dir/" "$DEST/$dir/"
+    "${RUN[@]}" mkdir -p "$DEST/$dir"
+    "${RUN[@]}" rsync -a --delete "$SOURCE/$dir/" "$DEST/$dir/"
   fi
 done
 
-# Eski nginx default sayfasını bırakma (karışıklık olmasın)
+# Eski nginx default welcome sayfası
 if [[ -f "$DEST/index.nginx-debian.html" ]]; then
-  "${RSYNC[@]}" -a --remove-source-files /dev/null "$DEST/index.nginx-debian.html" 2>/dev/null || true
-  if command -v sudo >/dev/null 2>&1; then
-    sudo rm -f "$DEST/index.nginx-debian.html" || true
-  else
-    rm -f "$DEST/index.nginx-debian.html" || true
-  fi
+  "${RUN[@]}" rm -f "$DEST/index.nginx-debian.html" || true
 fi
 
-# İzinler (www-data okuyabilsin)
-if command -v sudo >/dev/null 2>&1; then
-  sudo chmod -R a+rX "$DEST/index.html" "$DEST/css" "$DEST/js" "$DEST/lang" "$DEST/assets" "$DEST/music" 2>/dev/null || true
-fi
+# İzinler (nginx okusun)
+"${RUN[@]}" chmod -R a+rX "$DEST/index.html" "$DEST/css" "$DEST/js" "$DEST/lang" "$DEST/assets" "$DEST/music" 2>/dev/null || true
 
 echo ""
 echo "OK — RELEASE tamam."
