@@ -90,6 +90,8 @@ ekonomi oyunu/
 - Katman 1–4 + makro (faiz, vergi, harcama, FX, QE…).
 - Hedefli enstrüman: `targeted` + `onTarget` (rel, pulse, sustain).
 - Proje: `project` tur + `complete` kalıcı base/gBase.
+- **Maliyet:** `GAME.instrumentCost(cid, id)`. `escalateCost:true` (faiz/vergi/kamu): taban `cost` + `instrUseCount`. FX sabit **3**; regen penaltısı `floor(fxUses/4)`.
+- Onay öncesi: `pendingTotalCost` > polCap → uyarı, tur ilerlemez. **Sıfırla** = `clearPending()`.
 - Mobil sayısal adım: `%` içeren unit → **0.25**; diğer (mlr$) → **0.5**.
 - Mobil UI: `[4 rakam][birim][▲][▼][Uygula][Vazgeç]` — yükseklik normal `.btn`.
 - Desktop enstrüman: yatay sayfalama (`instrPerPage`). Mobil: dikey tüm liste (`per=9999`).

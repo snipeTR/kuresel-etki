@@ -13,9 +13,11 @@ GAME.beginTurn = function () {
     const ins = GAME.INSTRUMENTS_BY_ID[p.insId];
     const st = GAME.pc().instruments[p.insId];
     const oldVal = st.val;
-    GAME.pc().internal.polCap = Math.max(0, GAME.pc().internal.polCap - (ins.cost || 8));
+    const cost = GAME.instrumentCost(s.player, p.insId);
+    GAME.pc().internal.polCap = Math.max(0, GAME.pc().internal.polCap - cost);
     GAME.applyInstrumentChange(s.player, ins, oldVal, p.val, p.target);
-    s.interventionLog.push({ turn: s.turn, insId: p.insId, name: ins.name, val: p.val, target: p.target || null });
+    GAME.recordInstrumentUse(s.player, p.insId);
+    s.interventionLog.push({ turn: s.turn, insId: p.insId, name: ins.name, val: p.val, target: p.target || null, cost: cost });
     // Diplomatik tepkiler (yapısal projeler sessiz başlar, agresif eylemler gürültülü)
     if (ins.targeted && p.val > 0) GAME.generateReactions(s.player, ins, p.target, out);
     else if (!ins.project && Math.random() < 0.6) GAME.generateReactions(s.player, ins, null, out);

@@ -26,7 +26,7 @@ GAME.INSTRUMENTS = [
 
 /* ================= TEMEL MAKRO ARAÇLAR (Katman 2 — Numerical) ================= */
 { id:'policy_rate', name:'Merkez Bankası Politika Faizi', layer:2, type:'numerical',
-  unit:'%', min:0, max:60, step:0.5, cost:8,
+  unit:'%', min:0, max:60, step:0.5, cost:2, escalateCost:true,
   desc:'Para politikasının ana aracı. Artış: enflasyonu ve kuru baskılar ama büyümeyi yavaşlatır, işsizlik baskısı yaratır.',
   pulse:[ {k:'currency', s:'imm',  m:0.9},
           {k:'inflation',s:'short',m:-0.55},
@@ -37,7 +37,7 @@ GAME.INSTRUMENTS = [
   groups:{business:-1.2, labor:-1.5, liberal:0.4} },
 
 { id:'tax_rate', name:'Vergi Oranı', layer:2, type:'numerical',
-  unit:'%', min:5, max:60, step:1, cost:10,
+  unit:'%', min:5, max:60, step:1, cost:2, escalateCost:true,
   desc:'Genel vergi yükü. Artış bütçeyi/borcu rahatlatır ama büyümeyi, yatırımı ve toplum desteğini sıkar.',
   pulse:[ {k:'debt',   s:'short', m:-0.8},
           {k:'growth', s:'short', m:-0.15},
@@ -47,7 +47,7 @@ GAME.INSTRUMENTS = [
   groups:{business:-1.5, labor:-1.0, rural:-0.8} },
 
 { id:'public_spending', name:'Kamu Harcaması / Borçlanma', layer:2, type:'numerical',
-  unit:'% GDP', min:0, max:20, step:0.5, cost:8,
+  unit:'% GDP', min:0, max:20, step:0.5, cost:2, escalateCost:true,
   desc:'Kamu yatırımı ve harcama seviyesi. Büyümeyi canlandırır ama borç ve enflasyon üretir.',
   pulse:[ {k:'growth',   s:'short', m:0.35},
           {k:'inflation',s:'short', m:0.25},
@@ -57,12 +57,12 @@ GAME.INSTRUMENTS = [
   groups:{labor:1.2, rural:1.0, business:0.3, bureau:0.8} },
 
 { id:'fx_intervention', name:'Döviz Müdahalesi', layer:2, type:'numerical',
-  unit:' mlr$', min:0, max:150, step:5, cost:6,
-  desc:'Rezerv satarak kuru savunmak. Seviye açık kaldıkça her çeyrek rezerv erir, kur desteklenir.',
-  pulse:[ {k:'currency', s:'imm', m:0.12},
-          {k:'reserves', s:'imm', m:-0.85} ],
-  sustain:[ {k:'currency', m:0.025}, {k:'reserves', m:-0.35} ],
-  groups:{business:0.3} },
+  unit:' mlr$', min:0, max:150, step:5, cost:3,
+  desc:'Rezerv satarak kuru savunmak. Ucuz ama sık kullanım siyasi sermaye yenilenmesini aşındırır; enflasyon gecikmeli yükselir. Seviye açık kaldıkça rezerv hızla erir.',
+  pulse:[ {k:'currency', s:'imm', m:0.09},
+          {k:'reserves', s:'imm', m:-1.15} ],
+  sustain:[ {k:'currency', m:0.018}, {k:'reserves', m:-0.48} ],
+  groups:{business:0.2} },
 
 { id:'qe', name:'Miktarsal Gevşeme (QE / Bilanço)', layer:2, type:'numerical',
   unit:'% GDP', min:0, max:25, step:0.5, cost:9,

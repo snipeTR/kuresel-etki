@@ -14,6 +14,7 @@ GAME.formatPendingSummary = function () {
   s.pending.forEach(p => {
     const ins = GAME.INSTRUMENTS_BY_ID[p.insId];
     if (!ins) return;
+    const cost = GAME.instrumentCost(s.player, p.insId);
     let act;
     if (ins.type === 'toggle') act = p.val > 0
       ? '<b style="color:#008000">' + t('ui.open') + '</b>'
@@ -25,12 +26,17 @@ GAME.formatPendingSummary = function () {
     }
     const layer = GAME.LAYERS[ins.layer] ? GAME.LAYERS[ins.layer].short : '';
     html += '<li><span class="commit-layer">[' + layer + ']</span> <b>' + ins.name + '</b>: ' + act +
-      ' <span class="commit-cost">🏛 ' + (ins.cost || 8) + '</span></li>';
+      ' <span class="commit-cost">🏛 ' + cost + '</span></li>';
   });
   html += '</ol>';
-  const cap = s.pending.reduce((a, p) => a + ((GAME.INSTRUMENTS_BY_ID[p.insId] || {}).cost || 8), 0);
+  const cap = GAME.pendingTotalCost();
+  const pc = Math.round(GAME.pc().internal.polCap);
   html += '<p style="margin-top:8px;font-size:12px;color:#505050">' +
-    t('ui.total_polcap_cost', { cap: cap, pc: Math.round(GAME.pc().internal.polCap) }) + '</p>';
+    t('ui.total_polcap_cost', { cap: cap, pc: pc }) + '</p>';
+  if (cap > pc) {
+    html += '<p style="margin-top:8px;color:#c00000;font-weight:bold">' +
+      t('ui.polcap_insufficient', { need: cap, have: pc }) + '</p>';
+  }
   return html;
 };
 
@@ -41,30 +47,36 @@ GAME.confirmCommitTurn = function () {
   document.getElementById('modal-backdrop').classList.remove('map-backdrop-mobile');
   document.getElementById('modal-title').textContent =
     GAME.t('ui.turn_confirm_title', { date: GAME.turnDate(GAME.state.turn) });
+  const need = GAME.pendingTotalCost();
+  const have = GAME.pc().internal.polCap;
+  const short = need > have;
   document.getElementById('modal-body').innerHTML =
     '<div class="commit-confirm">' +
     GAME.formatPendingSummary() +
-    '<p style="margin-top:12px"><b>' + GAME.t('ui.turn_confirm_sure') + '</b></p>' +
+    (short
+      ? '<p style="margin-top:12px;color:#c00000"><b>' + GAME.t('ui.polcap_block_advance') + '</b></p>'
+      : '<p style="margin-top:12px"><b>' + GAME.t('ui.turn_confirm_sure') + '</b></p>') +
     '<p style="font-size:11px;color:#505050">' + GAME.t('ui.turn_confirm_note') + '</p>' +
     '</div>';
   const btns = document.getElementById('modal-buttons');
   btns.innerHTML = '';
-  const yes = document.createElement('button');
-  yes.className = 'btn btn-primary';
-  yes.textContent = GAME.t('ui.yes_advance');
-  yes.onclick = () => {
-    GAME.closeModal();
-    // Mobilde dünya olayları (Olaylar) sekmesine geç
-    if (GAME.mobile && GAME.mobile.active && GAME.goMobilePage) {
-      GAME.goMobilePage(2, true); // 0 Durum, 1 Grafik, 2 Olaylar
-    }
-    GAME.runTurnAnimated();
-  };
+  if (!short) {
+    const yes = document.createElement('button');
+    yes.className = 'btn btn-primary';
+    yes.textContent = GAME.t('ui.yes_advance');
+    yes.onclick = () => {
+      GAME.closeModal();
+      if (GAME.mobile && GAME.mobile.active && GAME.goMobilePage) {
+        GAME.goMobilePage(2, true);
+      }
+      GAME.runTurnAnimated();
+    };
+    btns.appendChild(yes);
+  }
   const no = document.createElement('button');
   no.className = 'btn';
-  no.textContent = GAME.t('ui.cancel');
+  no.textContent = short ? GAME.t('ui.close_modal') : GAME.t('ui.cancel');
   no.onclick = GAME.closeModal;
-  btns.appendChild(yes);
   btns.appendChild(no);
   document.getElementById('modal-backdrop').classList.remove('hidden');
 };
@@ -227,6 +239,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* Oyun ekranı butonları */
   document.getElementById('btn-log').onclick = GAME.openLogModal;
+  const btnReset = document.getElementById('btn-reset-pending');
+  if (btnReset) btnReset.onclick = () => GAME.clearPending();
   document.getElementById('btn-commit').onclick = GAME.confirmCommitTurn;
   document.getElementById('btn-help').onclick = GAME.openHelpModal;
 

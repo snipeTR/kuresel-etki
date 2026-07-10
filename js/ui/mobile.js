@@ -213,6 +213,8 @@ GAME.bindMobileNavOnce = function () {
   const mCommit = document.getElementById('m-btn-commit');
   if (mHelp) mHelp.onclick = () => GAME.openHelpModal();
   if (mLog) mLog.onclick = () => GAME.openLogModal();
+  const mReset = document.getElementById('m-btn-reset-pending');
+  if (mReset) mReset.onclick = () => GAME.clearPending();
   if (mCommit) mCommit.onclick = () => GAME.confirmCommitTurn();
   if (GAME.Music && GAME.Music.bindButtons) GAME.Music.bindButtons();
 

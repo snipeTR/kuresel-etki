@@ -50,6 +50,7 @@ GAME.newGame = function (playerCid) {
       internal: internal,
       groups: groups,
       instruments: instruments,
+      instrUseCount: {},                      // enstrüman id → turda onaylanmış kullanım sayısı
       history: { }                            // gösterge → [değerler]
     };
   }
@@ -118,6 +119,7 @@ GAME.migrateState = function () {
     const c = s.countries[cid];
     const def = GAME.COUNTRIES[cid];
     if (!c.instruments) c.instruments = {};
+    if (!c.instrUseCount) c.instrUseCount = {};
     GAME.INSTRUMENTS.forEach(ins => {
       if (!c.instruments[ins.id]) {
         let val = 0;
@@ -127,6 +129,48 @@ GAME.migrateState = function () {
       }
     });
   }
+};
+
+/* ---- Siyasi sermaye maliyeti (dinamik) ----
+   escalateCost: taban cost + kullanım sayısı (0. kullanım = taban, her onay +1)
+   fx_intervention: sabit 3; kullanım sayacı regen penaltısı için */
+GAME.instrumentCost = function (cid, insId) {
+  const ins = GAME.INSTRUMENTS_BY_ID[insId];
+  if (!ins) return 8;
+  const base = (ins.cost !== undefined && ins.cost !== null) ? ins.cost : 8;
+  if (ins.escalateCost) {
+    const c = GAME.state && GAME.state.countries[cid];
+    const uses = (c && c.instrUseCount && c.instrUseCount[insId]) || 0;
+    return base + uses;
+  }
+  return base;
+};
+
+GAME.pendingTotalCost = function () {
+  const s = GAME.state;
+  if (!s || !s.pending) return 0;
+  return s.pending.reduce((a, p) => a + GAME.instrumentCost(s.player, p.insId), 0);
+};
+
+GAME.recordInstrumentUse = function (cid, insId) {
+  const c = GAME.state.countries[cid];
+  if (!c) return;
+  if (!c.instrUseCount) c.instrUseCount = {};
+  c.instrUseCount[insId] = (c.instrUseCount[insId] || 0) + 1;
+};
+
+/* Döviz müdahalesi: her 4 kullanımda regen −1, −2, −3… */
+GAME.fxRegenPenalty = function (cid) {
+  const c = GAME.state.countries[cid];
+  if (!c || !c.instrUseCount) return 0;
+  const uses = c.instrUseCount.fx_intervention || 0;
+  return Math.floor(uses / 4);
+};
+
+GAME.clearPending = function () {
+  if (!GAME.state || GAME.ui.processing) return;
+  GAME.state.pending = [];
+  if (typeof GAME.refreshGameUI === 'function') GAME.refreshGameUI();
 };
 
 GAME.load = function () {

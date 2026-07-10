@@ -13,6 +13,27 @@ _(Boş — sıradaki iş buraya)_
 
 ---
 
+## 2026-07-10 — Siyasi sermaye, Sıfırla, makro/FX maliyetleri, EN yardım
+
+### UI / tur
+- Onay modalında **yetersiz siyasi sermaye** uyarısı; ilerleme butonu engellenir.
+- Olay Günlüğü yanında **Sıfırla / Reset**: tüm bekleyen enstrüman değişikliklerini iptal (onay öncesi).
+- Mobilde de Sıfırla butonu.
+
+### Maliyetler
+- **Politika faizi, vergi, kamu harcaması:** taban maliyet **2**; her onaylanan kullanımda **+1** (`escalateCost` + `instrUseCount`).
+- **Döviz müdahalesi:** maliyet **3**; rezerv erimesi artırıldı; her **4** kullanımda siyasi sermaye **regen −1/−2/−3…**; enflasyon **4 çeyrek gecikmeli** hafif uzun sızma.
+
+### i18n
+- TR/EN yeni UI stringleri (`reset_pending`, `polcap_*`, vb.).
+- İngilizce **help/about** metinleri TR ile aynı kapsamda, daha açık ve doğru terimlerle genişletildi.
+- İlgili enstrüman `desc` güncellemeleri.
+
+### API
+- `GAME.instrumentCost`, `pendingTotalCost`, `clearPending`, `recordInstrumentUse`, `fxRegenPenalty`.
+
+---
+
 ## 2026-07-10 — Dil seçici Win95 pencere içi sağ alt
 
 - Ana menü: `TR/EN` select tarayıcı/masaüstü köşesinde değil; **menu-box** status bar sağında.

@@ -376,13 +376,14 @@ GAME.recordAICountry = function (cid) {
     if (cd.score < 1.2) break;
     const d = GAME.INSTRUMENTS_BY_ID[cd.insId];
     if (!d) continue;
-    const cost = d.cost || 8;
+    const cost = GAME.instrumentCost ? GAME.instrumentCost(cid, cd.insId) : (d.cost || 8);
     if (c.internal.polCap < cost) continue;
     const st = c.instruments[cd.insId];
     if (!st) continue;
     const oldVal = st.val;
     c.internal.polCap -= cost;
     GAME.applyInstrumentChange(cid, d, oldVal, cd.val, cd.target);
+    if (GAME.recordInstrumentUse) GAME.recordInstrumentUse(cid, cd.insId);
     used[cd.insId] = true;
     const tone = cd.tone || GAME.calcTone(s.player, cid, d.targeted ? 50 : 20, cd.target === s.player ? 70 : 5);
     actions.push({
@@ -409,8 +410,10 @@ GAME.applyAIScriptEntry = function (entry) {
     if (!d) return;
     const st = c.instruments[act.insId];
     if (!st) return;
-    c.internal.polCap = Math.max(0, c.internal.polCap - (act.cost || d.cost || 8));
+    const cost = act.cost != null ? act.cost : (GAME.instrumentCost ? GAME.instrumentCost(cid, act.insId) : (d.cost || 8));
+    c.internal.polCap = Math.max(0, c.internal.polCap - cost);
     GAME.applyInstrumentChange(cid, d, st.val, act.newVal, act.target);
+    if (GAME.recordInstrumentUse) GAME.recordInstrumentUse(cid, act.insId);
     done++;
     if (act.title) {
       GAME.pushNews({

@@ -51,8 +51,10 @@ GAME.updateInternalDynamics = function (eventsOut) {
     if (isAuto) stTarget += 8; // baskı aygıtı
     c.internal.stability = GAME.clamp(c.internal.stability * 0.7 + GAME.clamp(stTarget, 0, 100) * 0.3, 0, 100);
 
-    /* 4. Siyasi sermaye yenilenmesi */
-    c.internal.polCap = GAME.clamp(c.internal.polCap + 2 + (c.internal.approval - 50) * 0.06, 0, 100);
+    /* 4. Siyasi sermaye yenilenmesi (FX sık kullanımı regen penaltısı) */
+    let regen = 2 + (c.internal.approval - 50) * 0.06;
+    if (typeof GAME.fxRegenPenalty === 'function') regen -= GAME.fxRegenPenalty(cid);
+    c.internal.polCap = GAME.clamp(c.internal.polCap + regen, 0, 100);
 
     /* 5. İç olaylar (eşik kontrolü, ülke başına tur başına en çok 1) */
     if (!eventsOut) continue;

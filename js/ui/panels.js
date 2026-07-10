@@ -333,7 +333,8 @@ GAME.instrumentDetail = function (ins) {
     ins.type === 'slider' ? 'Değerler: tam seviye (100) için — orantılı uygulanır' :
     'Değerler: her +1' + (ins.unit || '') + ' değişim başına';
   let h = '<div class="tt-head">' + ins.name + '</div>' +
-    '<div class="tt-tags">' + typeName + ' · ' + GAME.LAYERS[ins.layer].name + ' · 🏛 ' + (ins.cost || 8) + ' siyasi sermaye' +
+    '<div class="tt-tags">' + typeName + ' · ' + GAME.LAYERS[ins.layer].name + ' · 🏛 ' +
+    (GAME.state && GAME.state.player ? GAME.instrumentCost(GAME.state.player, ins.id) : (ins.cost || 8)) + ' siyasi sermaye' +
     (ins.targeted ? ' · 🎯 Hedef ülke seçilir' : '') +
     (ins.project ? ' · 🏗 ~' + Math.round(ins.project / 4 * 10) / 10 + ' yıllık proje' : '') + '</div>' +
     '<div>' + ins.desc + '</div>';
@@ -508,7 +509,8 @@ GAME.renderInstrumentBar = function () {
     const pending = s.pending.find(p => p.insId === ins.id);
     const div = document.createElement('button');
     const noSlot = slotsLeft <= 0 && !pending;
-    const noCap = GAME.pc().internal.polCap < (ins.cost || 8);
+    const costNow = GAME.instrumentCost(s.player, ins.id);
+    const noCap = GAME.pc().internal.polCap < costNow;
     div.className = 'instr-btn' + (pending ? ' pending' : '') + ((noSlot || noCap) && !pending ? ' disabled' : '');
     let stateTxt;
     if (ins.type === 'toggle') stateTxt = st.val > 0 ? 'AÇIK' : 'Kapalı';
@@ -521,7 +523,7 @@ GAME.renderInstrumentBar = function () {
       '<div class="i-meta"><span class="i-type">' + typeName + '</span>' +
       (ins.risk ? '<span class="i-risk">Risk ' + '!'.repeat(ins.risk) + '</span>' : '') +
       (ins.project ? ' 🏗 ' + (ins.project / 4) + ' yıl' : '') +
-      ' · 🏛' + (ins.cost || 8) + '</div>' +
+      ' · 🏛' + costNow + '</div>' +
       '<div class="i-state">' + stateTxt + '</div>';
     div.onmouseenter = () => GAME.showInstrTooltip(ins, div);
     div.onmouseleave = GAME.hideInstrTooltip;
@@ -592,7 +594,17 @@ GAME.openInstrumentModal = function (ins) {
 
   const projInfo = ins.project ? '<p style="color:#806000;font-size:12px">🏗 Uzun vadeli proje: ~' + (ins.project / 4) + ' yıl sürer, başladıktan sonra slot harcamadan ilerler. Tamamlanınca kalıcı etkiler kazanılır.</p>' : '';
   const riskInfo = ins.risk ? '<p style="color:#c00000;font-size:12px">⚠ Tespit riski: ' + ['', 'Düşük', 'Yüksek', 'Çok Yüksek'][ins.risk] + '. Tespit edilirse ilişkiler çöker ve misilleme gelir.</p>' : '';
-  const costInfo = '<p style="font-size:12px;color:#505050">Maliyet: 1 müdahale slotu + ' + (ins.cost || 8) + ' siyasi sermaye</p>' +
+  const costNow = GAME.instrumentCost(s.player, ins.id);
+  let costExtra = '';
+  if (ins.escalateCost) {
+    const uses = (c.instrUseCount && c.instrUseCount[ins.id]) || 0;
+    costExtra = ' <span style="color:#806000">(' + (GAME.t ? GAME.t('ui.cost_escalates', { n: uses }) : ('kullanım ' + uses + ' → maliyet artar')) + ')</span>';
+  }
+  if (ins.id === 'fx_intervention') {
+    const pen = GAME.fxRegenPenalty(s.player);
+    costExtra += ' <span style="color:#806000">(' + (GAME.t ? GAME.t('ui.fx_penalty_hint', { n: pen }) : ('regen penaltı: −' + pen)) + ')</span>';
+  }
+  const costInfo = '<p style="font-size:12px;color:#505050">Maliyet: 1 müdahale slotu + <b>🏛 ' + costNow + '</b> siyasi sermaye' + costExtra + '</p>' +
     '<div class="tt-inmodal">' + GAME.instrumentDetail(ins) + '</div>';
 
   const addPending = (val, target) => {
