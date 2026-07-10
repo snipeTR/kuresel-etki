@@ -119,7 +119,7 @@ ekonomi oyunu/
 | `kureselEtkiTurnJob_oyungrok` | Yarım tur script (`complete:false`) |
 | `keFeedCollapsed_oyungrok` | Feed daraltma |
 | `keLang_oyungrok` | Dil tercihi (`tr` / `en`) |
-| `keSettings_oyungrok` | Ayarlar paneli (`volStep`/`volume`, onay, feed varsayılanı) |
+| `keSettings_oyungrok` | Ayarlar paneli (`volStep`/`volume`, `chatSpeed` slow|fast, onay, feed) |
 | `keTunables_oyungrok` | Gelişmiş ayarlar — oyun/enstrüman/ülke sabitleri |
 | `keGlossSkip_oyungrok` | Haber sözlüğü “bir daha gösterme” (kalıcı) |
 
@@ -130,7 +130,7 @@ ekonomi oyunu/
 1. Modal: bekleyen enstrüman özeti + “emin misin?”
 2. Evet → mobilse **Olaylar (sekme 2)**; sonra `runTurnAnimated`
 3. **Plan (tek sefer):** `beginTurn` → `preAiState` clone → `buildAIScript` (tüm AI sırayla, state üzerinde) → state = preAi → job kaydet `complete:false` + SAVE = preAi
-4. **Oynatma:** script baştan; her ülke **500–2000 ms** gecikme; `applyAIScriptEntry` + haber. Bu sırada kalıcı SAVE yok.
+4. **Oynatma:** script baştan; her ülke gecikmesi **chat hızı** ayarına bağlı (`GAME.getChatDelays`: yavaş 500–2000 ms, hızlı 200 ms); `applyAIScriptEntry` + haber. Bu sırada kalıcı SAVE yok.
 5. **Flag:** `finishTurn` → job sil → `GAME.save()` → mesajlar kalıcı → buton aktif
 6. **Kesinti (`complete:false`):** preAi yükle, script **baştan** oynat (ortadan devam etme)
 

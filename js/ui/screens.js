@@ -17,15 +17,33 @@ GAME.renderMenu = function () {
 /* ---- Ayarlar (kalıcı localStorage) ---- */
 GAME.SETTINGS_KEY = 'keSettings_oyungrok';
 GAME.loadSettings = function () {
-  const defaults = { confirmNew: true, feedCollapsedDefault: false, volStep: 1, volume: 0.4 };
+  const defaults = {
+    confirmNew: true,
+    feedCollapsedDefault: false,
+    volStep: 1,
+    volume: 0.4,
+    /** 'slow' = mevcut 0.5–2 sn; 'fast' = ülke başına 0.2 sn */
+    chatSpeed: 'slow'
+  };
   try {
     const raw = localStorage.getItem(GAME.SETTINGS_KEY);
     if (!raw) return Object.assign({}, defaults);
-    return Object.assign({}, defaults, JSON.parse(raw));
+    const s = Object.assign({}, defaults, JSON.parse(raw));
+    if (s.chatSpeed !== 'fast' && s.chatSpeed !== 'slow') s.chatSpeed = 'slow';
+    return s;
   } catch (e) { return Object.assign({}, defaults); }
 };
 GAME.saveSettings = function (s) {
   try { localStorage.setItem(GAME.SETTINGS_KEY, JSON.stringify(s || GAME.loadSettings())); } catch (e) {}
+};
+
+/** Tur oynatma gecikmeleri (ms) — chat/olay akışı hızı */
+GAME.getChatDelays = function () {
+  const speed = (GAME.loadSettings && GAME.loadSettings().chatSpeed) || 'slow';
+  if (speed === 'fast') {
+    return { countryMs: 200, countryMin: 200, countryMax: 200, simMin: 200, simMax: 200 };
+  }
+  return { countryMs: null, countryMin: 500, countryMax: 2000, simMin: 500, simMax: 1200 };
 };
 
 GAME.renderSettings = function () {
@@ -37,6 +55,7 @@ GAME.renderSettings = function () {
   const lang = (GAME.i18n && GAME.i18n.getLang && GAME.i18n.getLang()) || 'tr';
   const vol = (GAME.Music && GAME.Music.volume != null) ? GAME.Music.volume : 0.4;
   const volLabel = vol <= 0.001 ? t('ui.vol_mute') : (vol <= 0.5 ? t('ui.vol_40') : t('ui.vol_100'));
+  const chatSpeed = st.chatSpeed === 'fast' ? 'fast' : 'slow';
 
   body.innerHTML =
     '<div class="settings-row">' +
@@ -49,6 +68,25 @@ GAME.renderSettings = function () {
     '<div class="settings-row">' +
     '<label class="settings-label">' + t('ui.set_volume') + '</label>' +
     '<button type="button" id="set-vol" class="btn settings-control">' + volLabel + '</button></div>' +
+
+    '<div class="settings-row settings-row-chat">' +
+    '<label class="settings-label">' + t('ui.set_chat_speed') + '</label>' +
+    '<div class="chat-speed-picks" role="radiogroup" aria-label="' + t('ui.set_chat_speed') + '">' +
+    '<button type="button" class="chat-speed-btn' + (chatSpeed === 'slow' ? ' active' : '') +
+    '" id="set-chat-slow" data-speed="slow" role="radio" aria-checked="' + (chatSpeed === 'slow') +
+    '" title="' + t('ui.set_chat_slow_hint') + '">' +
+    '<span class="chat-speed-dot"></span>' +
+    '<span class="chat-speed-lbl">' + t('ui.set_chat_slow') + '</span>' +
+    '</button>' +
+    '<button type="button" class="chat-speed-btn' + (chatSpeed === 'fast' ? ' active' : '') +
+    '" id="set-chat-fast" data-speed="fast" role="radio" aria-checked="' + (chatSpeed === 'fast') +
+    '" title="' + t('ui.set_chat_fast_hint') + '">' +
+    '<span class="chat-speed-dot"></span>' +
+    '<span class="chat-speed-lbl">' + t('ui.set_chat_fast') + '</span>' +
+    '</button>' +
+    '</div>' +
+    '<p class="settings-hint-inline">' + t('ui.set_chat_speed_note') + '</p>' +
+    '</div>' +
 
     '<div class="settings-row">' +
     '<label class="settings-check"><input type="checkbox" id="set-confirm-new"' + (st.confirmNew !== false ? ' checked' : '') + '> ' +
@@ -83,6 +121,16 @@ GAME.renderSettings = function () {
     if (GAME.Music && GAME.Music.cycleVolume) GAME.Music.cycleVolume();
     GAME.renderSettings();
   };
+  const setChatSpeed = function (speed) {
+    const s = GAME.loadSettings();
+    s.chatSpeed = speed === 'fast' ? 'fast' : 'slow';
+    GAME.saveSettings(s);
+    GAME.renderSettings();
+  };
+  const btnSlow = document.getElementById('set-chat-slow');
+  const btnFast = document.getElementById('set-chat-fast');
+  if (btnSlow) btnSlow.onclick = function () { setChatSpeed('slow'); };
+  if (btnFast) btnFast.onclick = function () { setChatSpeed('fast'); };
   const conf = document.getElementById('set-confirm-new');
   if (conf) conf.onchange = function () {
     const s = GAME.loadSettings();

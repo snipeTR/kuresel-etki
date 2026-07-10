@@ -139,7 +139,10 @@ GAME.runTurnAnimated = async function (resumeJob) {
   GAME.renderFeed();
   if (GAME.syncMobileChrome) GAME.syncMobileChrome();
 
-  /* ---- Oynatma: her ülke 0.5–2 sn ---- */
+  /* ---- Oynatma: chat hızı (yavaş 0.5–2 sn / hızlı 0.2 sn) ---- */
+  const delays = (typeof GAME.getChatDelays === 'function')
+    ? GAME.getChatDelays()
+    : { countryMin: 500, countryMax: 2000, simMin: 500, simMax: 1200 };
   const script = job.script || [];
   for (let i = 0; i < script.length; i++) {
     const entry = script[i];
@@ -153,14 +156,17 @@ GAME.runTurnAnimated = async function (resumeJob) {
     const acted = GAME.applyAIScriptEntry(entry);
     // Oynatma sırasında kalıcı SAVE yok (flag false) — sadece job
     GAME.saveTurnJob(job);
-    await GAME.sleep(GAME.randInt(500, 2000));
+    const countryWait = delays.countryMs != null
+      ? delays.countryMs
+      : GAME.randInt(delays.countryMin, delays.countryMax);
+    await GAME.sleep(countryWait);
     if (GAME.state.news.length > before) GAME.renderFeed();
     if (acted && GAME.syncMobileChrome) GAME.syncMobileChrome();
   }
 
   /* ---- Simülasyon + kalıcı flag ---- */
   GAME.setFeedStatus('*** Simülasyon hesaplanıyor');
-  await GAME.sleep(GAME.randInt(500, 1200));
+  await GAME.sleep(GAME.randInt(delays.simMin, delays.simMax));
   const result = GAME.finishTurn();
 
   // Flag: tur tamam — mesajlar ve state kalıcı

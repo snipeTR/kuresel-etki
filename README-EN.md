@@ -48,7 +48,9 @@ No coding required.
 ## 1.0b Settings & Advanced settings
 
 ### Settings (main menu)
-**Settings**: language, volume step, new-game confirm, collapse feed by default (desktop), reset glossary “don’t show again”.  
+**Settings**: language, volume step, **chat speed** (slow / fast round picks), new-game confirm, collapse feed by default (desktop), reset glossary “don’t show again”.  
+- **Slow:** AI countries ~0.5–2 s apart (default).  
+- **Fast:** **0.2 s** per country.  
 Stored only in this browser (`keSettings_oyungrok`); never sent to a server.
 
 ### Advanced settings (desktop only)
@@ -252,7 +254,7 @@ global-impact/
 ```text
 Confirm → beginTurn → preAi snapshot → buildAIScript
 → restore preAi → job complete:false
-→ play script (500–2000 ms / country)
+→ play script (chat speed: slow ~500–2000 ms / fast 200 ms per country)
 → finishTurn → clear job → permanent save
 ```
 

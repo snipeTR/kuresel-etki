@@ -27,7 +27,7 @@
 | `kureselEtkiTurnJob_oyungrok` | Yarım tur AI script |
 | `keFeedCollapsed_oyungrok` | Feed daraltma |
 | `keLang_oyungrok` | Dil (tr/en) |
-| `keSettings_oyungrok` | Ayarlar paneli tercihleri |
+| `keSettings_oyungrok` | Ayarlar (ses, chatSpeed slow|fast, …) |
 | `keTunables_oyungrok` | Gelişmiş ayarlar (sabitler) |
 | `keGlossSkip_oyungrok` | Sözlük “bir daha gösterme” |
 

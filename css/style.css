@@ -119,7 +119,34 @@ body:not(.mobile-ui) .lang-switcher-mobile-nav{ display:none !important; }
 .settings-check input{margin-top:2px;}
 .settings-actions{flex-direction:column; align-items:flex-start;}
 .settings-hint{font-size:11px; color:#008000;}
+.settings-hint-inline{flex:1 1 100%; margin:0; font-size:11px; color:#505050; line-height:1.4;}
 .settings-note{font-size:11px; color:var(--dim); margin-top:8px; line-height:1.45;}
+.settings-row-chat{align-items:flex-start;}
+.chat-speed-picks{display:flex; flex-wrap:wrap; gap:14px; align-items:center;}
+.chat-speed-btn{
+  display:inline-flex; flex-direction:column; align-items:center; gap:6px;
+  min-width:72px; padding:6px 8px; cursor:pointer;
+  background:var(--face); color:#000;
+  border:2px solid; border-color:#fff #404040 #404040 #fff;
+  font-family:inherit; font-size:11px;
+}
+.chat-speed-btn:active{border-color:#404040 #fff #fff #404040;}
+.chat-speed-btn.active{
+  border-color:#404040 #fff #fff #404040;
+  background:#d4d0c8;
+}
+.chat-speed-dot{
+  width:28px; height:28px; border-radius:50%;
+  box-sizing:border-box;
+  border:2px solid #404040;
+  background:linear-gradient(180deg,#fff 0%,#c0c0c0 100%);
+  box-shadow:inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
+}
+.chat-speed-btn.active .chat-speed-dot{
+  background:radial-gradient(circle at 40% 35%, #6ec6ff 0%, #000080 55%, #000040 100%);
+  box-shadow:inset 1px 1px 2px rgba(255,255,255,.5), 0 0 0 1px #000080;
+}
+.chat-speed-lbl{font-weight:bold; color:var(--navy); white-space:nowrap;}
 .settings-advanced-block{
   margin-top:18px; padding-top:12px;
   border-top:2px solid; border-color:#808080 #fff #fff #808080;

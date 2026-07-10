@@ -13,6 +13,16 @@ _(Boş — sıradaki iş buraya)_
 
 ---
 
+## 2026-07-10 — Ayarlar: chat hızı (yavaş / hızlı)
+
+- Ana menü **Ayarlar**: Chat hızı — iki yuvarlak seçim (**Yavaş** / **Hızlı**).
+- Yavaş: ülke başına **0,5–2 sn** (mevcut tempo).
+- Hızlı: ülke başına **0,2 sn** sabit; simülasyon beklemesi de hızlanır.
+- `keSettings_oyungrok.chatSpeed` (`slow`|`fast`); `GAME.getChatDelays()`.
+- TR/EN i18n; Win95 yuvarlak buton stili.
+
+---
+
 ## 2026-07-10 — Mute: ayarlardan kapatınca yeni oyunda müzik susmuyor
 
 - Kök neden: `Music.unlock()` async olarak eski `prev` sesini geri yüklüyordu; buton mute iken element sesi açılıyordu.

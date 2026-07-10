@@ -48,7 +48,9 @@ Bu bölüm **hiç kod bilmeden** oynamak içindir.
 ## 1.0b Ayarlar ve Gelişmiş ayarlar
 
 ### Ayarlar (ana menü)
-Ana menüde **Ayarlar**: dil, ses basamağı, yeni oyun onayı, olay akışını daralt (masaüstü), sözlük “bir daha gösterme” listesini sıfırla.  
+Ana menüde **Ayarlar**: dil, ses basamağı, **chat hızı** (yavaş / hızlı yuvarlaklar), yeni oyun onayı, olay akışını daralt (masaüstü), sözlük “bir daha gösterme” listesini sıfırla.  
+- **Yavaş:** AI ülkeler turda ~0,5–2 sn arayla (varsayılan).  
+- **Hızlı:** her ülke **0,2 sn**.  
 Tercihler bu tarayıcıda saklanır (`keSettings_oyungrok`); sunucuya gitmez.
 
 ### Gelişmiş ayarlar (yalnız masaüstü)
@@ -418,7 +420,7 @@ state = preAiState  ← plan yan etkileri geri alınır
 job = { preAiState, script, complete:false } → localStorage
 SAVE = preAi (kalıcı kayıt henüz final değil)
         ↓
-script baştan oynat (ülke başına ~500–2000 ms)
+script baştan oynat (ülke başına chat hızı: yavaş ~500–2000 ms / hızlı 200 ms)
   applyAIScriptEntry + haber satırı
         ↓
 finishTurn() → job sil → GAME.save() → mesajlar kalıcı
