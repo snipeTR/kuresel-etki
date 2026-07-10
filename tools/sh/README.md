@@ -17,27 +17,29 @@ bash tools/sh/<script>.sh [args]
 | `release.sh` | **Bilinçli release:** `/var/www/html/oyungrok` → site kökü `/var/www/html/` (index + css/js/lang/assets/music). `/oyun/` ve `/oyungrok/` silinmez |
 | `deploy-from-github.sh` | Public sarmalayıcı: private secrets deploy scriptine yönlendirir (yoksa yardım mesajı) |
 | `harden-sshd.sh` | SSH kopma riskini azaltır: `sshd_config.d/99-gi-keepalive.conf` (ClientAlive, MaxStartups, UseDNS no). **Port/key değiştirmez** |
+| `install-ops-to-home.sh` | Sunucuda `~/gi-ops/` sarmalayıcılarını kurar (`deploy`, `release`, `install-deps`, …) |
 
-### Sık kullanım
+### Sık kullanım (repo / oyungrok)
 
 ```bash
-# Paket kontrol / kur
 bash tools/sh/INSTALL.sh
 bash tools/sh/INSTALL.sh --check-only
-bash tools/sh/INSTALL.sh --yes
-bash tools/sh/INSTALL.sh --with-nginx
-
-# Günlük geliştirme deploy (sunucuda, asıl script secrets’te)
 bash tools/sh/deploy-from-github.sh
-# veya:
-bash ~/global-impact-work/kuresel-etki-secrets/deploy/deploy-from-github.sh
-# → yalnız /var/www/html/oyungrok
-
-# Site kökü sürüm (bilinçli; her işte değil)
-bash /var/www/html/oyungrok/tools/sh/release.sh --yes
-
-# SSH dayanıklılık (sunucuda bir kez / güncelleme)
+bash tools/sh/release.sh --yes
 bash tools/sh/harden-sshd.sh --yes
+bash tools/sh/install-ops-to-home.sh --yes   # → ~/gi-ops
+```
+
+### Sunucu home (`~/gi-ops`) — tercih edilen
+
+```bash
+cd ~/gi-ops
+./status.sh
+./update-dev.sh          # GitHub → /oyungrok only
+./update-release.sh      # deploy + site kökü release
+./install-deps.sh --yes  # paketler
+./release.sh --yes       # yalnız oyungrok → /
+./harden-sshd.sh --yes
 ```
 
 ---

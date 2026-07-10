@@ -13,6 +13,15 @@ _(Boş — sıradaki iş buraya)_
 
 ---
 
+## 2026-07-10 — ~/gi-ops: sunucu home ops (deploy/release/install)
+
+- `tools/sh/install-ops-to-home.sh` → `$HOME/gi-ops/` sarmalayıcıları.
+- `deploy.sh`, `release.sh` (oyungrok→/), `install-deps.sh`, `harden-sshd.sh`,
+  `status.sh`, `update-dev.sh`, `update-release.sh`.
+- AGENTS / YAPILACAKLAR / tools/sh/README güncellendi.
+
+---
+
 ## 2026-07-10 — SSH dayanıklılık: harden-sshd.sh + sunucu drop-in
 
 - `tools/sh/harden-sshd.sh`: `99-gi-keepalive.conf` (ClientAlive, MaxStartups, UseDNS no…).
