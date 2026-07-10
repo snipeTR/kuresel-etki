@@ -186,20 +186,37 @@ Own performance · global stability · legacy power · strategic consistency · 
 
 Modern browser; optional **Node.js** 18+ for `serve.js` / tests. No npm install.
 
+### One-line install (Linux server)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/snipeTR/global-impact/main/install.sh | bash
+```
+
+With nginx:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/snipeTR/global-impact/main/install.sh | bash -s -- --yes --with-nginx
+```
+
+| Script | Role |
+|--------|------|
+| **`install.sh`** (repo root) | Bootstrap: clone + packages + `~/gi-ops` |
+| **`tools/sh/INSTALL.sh`** | Detailed multi-distro package install |
+| **`~/gi-ops/`** | Server shortcuts: deploy / release / status |
+
+### Manual
+
 ```bash
 git clone https://github.com/snipeTR/global-impact.git
 cd global-impact
-
-# Linux/macOS: install/check publish deps
-bash tools/sh/INSTALL.sh
-# bash tools/sh/INSTALL.sh --check-only
-# bash tools/sh/INSTALL.sh --with-nginx
+bash install.sh --yes
+# or: bash tools/sh/INSTALL.sh
 
 node serve.js
 # → http://localhost:8123
 
-# tools/js = Node helpers; tools/sh = bash (not game runtime)
-# Server: /oyungrok = dev; tools/sh/release.sh = site root (optional)
+# Server after install: cd ~/gi-ops && ./update-dev.sh
+# Site root release: ./update-release.sh  (never touch /oyun/)
 ```
 
 ## 2.2 i18n (`lang/`)

@@ -13,6 +13,15 @@ _(Boş — sıradaki iş buraya)_
 
 ---
 
+## 2026-07-10 — install.sh: tek komut curl\|bash kurulum
+
+- Kök `install.sh`: clone + `tools/sh/INSTALL.sh` + isteğe `~/gi-ops`.
+- README TR/EN tek satır:  
+  `curl -fsSL https://raw.githubusercontent.com/snipeTR/global-impact/main/install.sh | bash`
+- AGENTS / tools README / YAPILACAKLAR güncellendi.
+
+---
+
 ## 2026-07-10 — ~/gi-ops: sunucu home ops (deploy/release/install)
 
 - `tools/sh/install-ops-to-home.sh` → `$HOME/gi-ops/` sarmalayıcıları.

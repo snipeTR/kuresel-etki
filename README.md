@@ -292,23 +292,42 @@ Bağımlılık yöneticisi yok: **npm install yok**, bundler yok, framework yok.
 
 ## 2.2 Çalıştırma
 
+### Linux sunucu — tek komut kurulum
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/snipeTR/global-impact/main/install.sh | bash
+```
+
+Nginx dahil (canlı web sunucu):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/snipeTR/global-impact/main/install.sh | bash -s -- --yes --with-nginx
+```
+
+Bu komut: repoyu indirir (`~/global-impact`), `tools/sh/INSTALL.sh` ile paketleri kurar, sunucuda `~/gi-ops` ops kısayollarını ekler.
+
+| Betik | Rol |
+|--------|-----|
+| **`install.sh`** (kök) | Bootstrap: clone + paket + ops |
+| **`tools/sh/INSTALL.sh`** | Ayrıntılı paket kontrol/kur (apt/dnf/…) |
+| **`~/gi-ops/`** | Sunucuda deploy / release / status |
+
+### Manuel clone
+
 ```bash
 git clone https://github.com/snipeTR/global-impact.git
 cd global-impact
-
-# Linux/macOS: yayın + dev paketlerini kontrol/kur (git, rsync, curl, node, …)
+bash install.sh --yes
+# veya yalnız paketler:
 bash tools/sh/INSTALL.sh
-# bash tools/sh/INSTALL.sh --check-only
-# bash tools/sh/INSTALL.sh --with-nginx
 
 node serve.js
 # → http://localhost:8123
 
-# Araçlar: tools/js (Node) · tools/sh (bash) — oyun runtime değil
-# Sunucu:
-#   Geliştirme: …/oyungrok/  ← deploy-from-github
-#   Site kökü release: bash tools/sh/release.sh --yes
-#   Eski stabil: …/oyun/  (dokunma)
+# Sunucu (kurulum sonrası):
+#   cd ~/gi-ops && ./update-dev.sh       # → /oyungrok
+#   cd ~/gi-ops && ./update-release.sh   # oyungrok + site kökü /
+#   Eski stabil: /oyun/  (dokunma)
 ```
 
 `serve.js` yalnızca statik dosya sunar. `index.html` dosya protokolüyle de açılabilir; müzik / CORS için HTTP tercih edilir.

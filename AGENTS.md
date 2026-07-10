@@ -235,11 +235,20 @@ Konsolda: `GAME.countNewsTemplates()`, `GAME.testInstrumentPaging()`.
     Gizli dosya değiştiyse ayrıca private `kuresel-etki-secrets` push.  
     Kullanıcı “sadece local” demedikçe a–c atlanmaz; **d bilinçli**.
 
-### 10.0 `tools/` yapısı (koru — ajanlar)
+### 10.0 Kurulum girişi + `tools/` yapısı (koru — ajanlar)
+
+**Tek komut (README’de de):**
+```bash
+curl -fsSL https://raw.githubusercontent.com/snipeTR/global-impact/main/install.sh | bash
+```
+- Kök **`install.sh`**: bootstrap (clone + `tools/sh/INSTALL.sh` + isteğe `~/gi-ops`).
+- **`tools/sh/INSTALL.sh`**: çoklu distro paket kurulumu (asıl paket betiği).
+- İkisini de koru; kök `install.sh` silinirse tek-komut kurulum kırılır.
 
 ```
+install.sh           # bootstrap (curl | bash)
 tools/
-  README.md          # yönlendirme
+  README.md
   js/                # Node CLI — runtime DEĞİL
     README.md
     sync-instrument-descs.js
@@ -251,17 +260,16 @@ tools/
     INSTALL.sh
     release.sh
     deploy-from-github.sh
-    harden-sshd.sh       # sunucu SSH dayanıklılık (drop-in; port/key değiştirmez)
-    install-ops-to-home.sh  # → ~/gi-ops sarmalayıcıları
+    harden-sshd.sh
+    install-ops-to-home.sh  # → ~/gi-ops
 ```
 
-- **Tek seferlik `patch-*.js` ekleme / bırakma.** Kalıcı iş kaynak dosyaya veya `tools/js` senkron scriptlerine.
+- **Tek seferlik `patch-*.js` ekleme / bırakma.**
 - Yeni Node aracı → `tools/js/`; shell → `tools/sh/`. README’leri güncelle.
 - Node script kök yolu: `path.join(__dirname, '../..')`.
 - Oyun runtime: `index.html` → `js/`, `lang/`, `css/` — **tools yüklenmez**.
-- Sunucu SSH sertleştirme: `bash tools/sh/harden-sshd.sh --yes` (sshd -t + reload; yedek `/etc/ssh/backup-gi/`).
-- **Sunucu home ops:** `~/gi-ops/` (`install-ops-to-home.sh --yes`).  
-  Günlük: `~/gi-ops/update-dev.sh` (oyungrok). Sürüm: `~/gi-ops/update-release.sh` veya `release.sh`.
+- Sunucu SSH: `bash tools/sh/harden-sshd.sh --yes`.
+- **Sunucu home ops:** `~/gi-ops/` — günlük `update-dev.sh`; sürüm `update-release.sh`.
 
 ### 10.0b Yardım / about metinleri
 

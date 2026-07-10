@@ -3,6 +3,12 @@
 Linux/macOS (veya sunucu) için bash betikleri.  
 **Oyunun tarayıcı runtime’ı değildir.** Windows’ta WSL/Git Bash veya sunucu SSH ile çalıştırın.
 
+**Tek komut kurulum (repo kökü `install.sh`):**
+```bash
+curl -fsSL https://raw.githubusercontent.com/snipeTR/global-impact/main/install.sh | bash
+```
+Bu, repoyu indirip buradaki `INSTALL.sh` + `install-ops-to-home.sh` zincirini çalıştırır.
+
 ```text
 bash tools/sh/<script>.sh [args]
 ```
