@@ -237,11 +237,48 @@ body.mobile-ui #screen-advanced{display:none !important;}
 .about-actions .btn{margin:0 8px 0 0;}
 
 /* ---- Ülke Seçimi ---- */
+/* Not: .screen.active justify-content:center uzun grid’de üst satırı keser → bu ekranda flex-start */
+#screen-country.screen.active{
+  justify-content:flex-start;
+  align-items:center;
+  overflow-x:hidden;
+  overflow-y:auto;
+  padding:12px 0 28px;
+  box-sizing:border-box;
+  -webkit-overflow-scrolling:touch;
+}
+#screen-country .screen-title{
+  flex-shrink:0;
+  width:100%;
+  max-width:1280px;
+  box-sizing:border-box;
+  padding:8px 20px 0;
+  margin:0 0 4px;
+  text-align:center;
+}
+#screen-country .screen-sub{
+  flex-shrink:0;
+  width:100%;
+  max-width:1280px;
+  box-sizing:border-box;
+  padding:0 20px;
+  margin:0 0 16px;
+  text-align:center;
+}
 .screen-title{font-size:28px; margin:26px 0 4px; color:#fff; text-shadow:2px 2px 0 rgba(0,0,0,.5);}
 .screen-sub{color:#e0f0f0; margin-bottom:22px; text-shadow:1px 1px 0 rgba(0,0,0,.5);}
-.country-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; max-width:1280px; padding:0 20px 40px;}
+.country-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:12px;
+  width:100%;
+  max-width:1280px;
+  box-sizing:border-box;
+  padding:4px 20px 40px;
+  flex:0 0 auto;
+}
 .country-card{background:var(--face); border:2px solid; border-color:#ffffff #404040 #404040 #ffffff;
-  padding:14px; cursor:pointer;}
+  padding:14px; cursor:pointer; box-sizing:border-box;}
 .country-card:hover{background:#d4d4d4;}
 .country-card:hover h3{color:#fff; background:var(--navy); padding:0 4px;}
 .country-card:active{border-color:#404040 #ffffff #ffffff #404040;}
@@ -876,9 +913,13 @@ body.mobile-ui .map-info{flex:1 1 auto; max-height:32vh; width:100%;}
 @media (max-width:920px){
   .game-title{font-size:34px; letter-spacing:3px;}
   .btn-big{width:min(300px, 88vw); font-size:15px;}
-  .country-grid{grid-template-columns:1fr 1fr; gap:8px; padding:0 10px 24px;}
+  #screen-country.screen.active{padding:8px 0 20px;}
+  #screen-country .screen-title{font-size:22px; padding:6px 12px 0; margin-bottom:2px;}
+  #screen-country .screen-sub{font-size:12px; padding:0 12px; margin-bottom:10px;}
+  .country-grid{grid-template-columns:1fr 1fr; gap:8px; padding:4px 10px 28px;}
   .country-card{padding:10px;}
   .country-card .desc{min-height:0; font-size:11px;}
+  .country-card .flag-win95.flag-lg img{width:40px; height:26px;}
   .menu-mission{font-size:11px; bottom:10px;}
   .about-box{margin:8px; max-width:100%;}
   #tooltip{max-width:94vw !important; left:3vw !important; right:3vw;}

@@ -13,6 +13,13 @@ _(Boş — sıradaki iş buraya)_
 
 ---
 
+## 2026-07-10 — Ülke seçim ekranı: üst satır kesilme (desktop + mobil)
+
+- `#screen-country`: `justify-content:flex-start` + kaydırma; ortalanmış flex üst kartları kesiyordu.
+- Başlık/alt metin padding; grid üst boşluk.
+
+---
+
 ## 2026-07-10 — tools/ yeniden yapı: js/ + sh/; patch JS silindi
 
 - `tools/js/`: kalıcı Node CLI (sync-instrument-descs, sync-help-i18n, build-lang-*).
