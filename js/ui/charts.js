@@ -293,34 +293,79 @@ GAME.chartTipText = function (id) {
   return L.w + ': ' + tip.what + ' ' + L.u + ': ' + tip.up + ' ' + L.d + ': ' + tip.down;
 };
 
+/* Mobil: ilk tık aktif, aynı butona ikinci tık = açıklama; masaüstü: hover */
+GAME._isTouchUi = function () {
+  return !!(GAME.mobile && GAME.mobile.active) ||
+    (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(hover: none)').matches);
+};
+
 /* Grafik kontrol çipleri */
 GAME.renderChartControls = function () {
   const indBox = document.getElementById('chart-ind-buttons');
   const rngBox = document.getElementById('chart-range-buttons');
   indBox.innerHTML = ''; rngBox.innerHTML = '';
+  const touch = GAME._isTouchUi();
   GAME.chart.SERIES.forEach(sr => {
     const b = document.createElement('button');
+    b.type = 'button';
     b.className = 'chip' + (GAME.chart.indicator === sr.id ? ' active' : '');
     b.textContent = sr.name;
+    b.setAttribute('data-chart-id', sr.id);
     const tip = GAME.chartTipText(sr.id);
     if (tip) {
-      // title yok: tarayıcının beyaz native tooltip'i çift mesaj yaratıyordu
       b.removeAttribute('title');
       b.setAttribute('aria-label', sr.name + '. ' + tip);
+    }
+    if (!touch && tip) {
       b.onmouseenter = (e) => GAME.showChartChipTip(sr.id, b, e);
       b.onmouseleave = () => GAME.hideChartChipTip();
     }
-    b.onclick = () => { GAME.chart.indicator = sr.id; GAME.hideChartChipTip(); GAME.renderChartControls(); GAME.drawChart(); };
+    b.onclick = (e) => {
+      e.stopPropagation();
+      if (touch) {
+        // 1) pasif → aktif  2) zaten aktif → açıklama aç/kapa
+        if (GAME.chart.indicator !== sr.id) {
+          GAME.chart.indicator = sr.id;
+          GAME.hideChartChipTip();
+          GAME.renderChartControls();
+          GAME.drawChart();
+          return;
+        }
+        const el = GAME._chartTipEl;
+        const open = el && !el.classList.contains('hidden') && GAME._chartTipOpenId === sr.id;
+        if (open) GAME.hideChartChipTip();
+        else GAME.showChartChipTip(sr.id, b, e);
+        return;
+      }
+      GAME.chart.indicator = sr.id;
+      GAME.hideChartChipTip();
+      GAME.renderChartControls();
+      GAME.drawChart();
+    };
     indBox.appendChild(b);
   });
   [['1y', 'ui.range_1y'], ['3y', 'ui.range_3y'], ['5y', 'ui.range_5y'], ['10y', 'ui.range_10y'], ['all', 'ui.range_all']].forEach(([id, labelKey]) => {
     const label = GAME.t ? GAME.t(labelKey) : labelKey;
     const b = document.createElement('button');
+    b.type = 'button';
     b.className = 'chip' + (GAME.chart.range === id ? ' active' : '');
     b.textContent = label;
-    b.onclick = () => { GAME.chart.range = id; GAME.renderChartControls(); GAME.drawChart(); };
+    b.onclick = () => {
+      GAME.chart.range = id;
+      GAME.hideChartChipTip();
+      GAME.renderChartControls();
+      GAME.drawChart();
+    };
     rngBox.appendChild(b);
   });
+  if (!GAME._chartTipOutsideBound) {
+    GAME._chartTipOutsideBound = true;
+    document.addEventListener('click', function (ev) {
+      if (!GAME._chartTipEl || GAME._chartTipEl.classList.contains('hidden')) return;
+      if (ev.target.closest && (ev.target.closest('#chart-chip-tip') || ev.target.closest('[data-chart-id]'))) return;
+      GAME.hideChartChipTip();
+    }, true);
+  }
 };
 
 GAME._chartTipEl = null;
@@ -345,6 +390,9 @@ GAME.showChartChipTip = function (id, anchor, e) {
     '<div class="cct-row cct-up"><b>' + L.u + ':</b> ' + tip.up + '</div>' +
     '<div class="cct-row cct-dn"><b>' + L.d + ':</b> ' + tip.down + '</div>';
   el.classList.remove('hidden');
+  GAME._chartTipOpenId = id;
+  // mobilde tıklanabilir (dışarı tık yakalama için)
+  el.style.pointerEvents = GAME._isTouchUi() ? 'auto' : 'none';
   const pad = 8;
   const r = anchor.getBoundingClientRect();
   el.style.position = 'fixed';
@@ -363,4 +411,5 @@ GAME.showChartChipTip = function (id, anchor, e) {
 };
 GAME.hideChartChipTip = function () {
   if (GAME._chartTipEl) GAME._chartTipEl.classList.add('hidden');
+  GAME._chartTipOpenId = null;
 };

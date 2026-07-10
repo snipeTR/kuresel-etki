@@ -109,6 +109,18 @@ body:not(.mobile-ui) .lang-switcher-mobile-nav{ display:none !important; }
   font-style:italic; letter-spacing:.2px; text-shadow:1px 1px 2px rgba(0,0,0,.45);
   padding:0 20px; pointer-events:none;}
 
+/* ---- Ayarlar ---- */
+.settings-box{max-width:520px;}
+.settings-body{padding:12px 18px 8px; text-align:left;}
+.settings-row{margin-bottom:14px; display:flex; flex-wrap:wrap; align-items:center; gap:10px;}
+.settings-label{font-weight:bold; min-width:120px; flex:1 1 140px;}
+.settings-control{min-width:100px;}
+.settings-check{font-size:13px; display:flex; align-items:flex-start; gap:8px; cursor:pointer;}
+.settings-check input{margin-top:2px;}
+.settings-actions{flex-direction:column; align-items:flex-start;}
+.settings-hint{font-size:11px; color:#008000;}
+.settings-note{font-size:11px; color:var(--dim); margin-top:8px; line-height:1.45;}
+
 /* ---- Nasıl Oynanır ---- */
 .about-box{max-width:860px; padding:0 0 24px; margin:24px; max-height:92vh; overflow-y:auto;}
 .about-box::before{content:"YARDIM.TXT — Nasıl Oynanır";

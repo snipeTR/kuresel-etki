@@ -13,6 +13,14 @@ _(Boş — sıradaki iş buraya)_
 
 ---
 
+## 2026-07-10 — Mobil grafik tık + ana menü Ayarlar
+
+- Mobil grafik çipleri: 1. tık aktif, aynı çipe 2. tık açıklama; başka yere tık → kapat.
+- Masaüstü: hover açıklama aynı.
+- Ana menü **Ayarlar**: dil, ses, yeni oyun onayı, feed daralt, sözlük mute sıfırla (`keSettings_oyungrok`).
+
+---
+
 ## 2026-07-10 — Grafik çip ipuçları + sözlük popover UX
 
 - Grafik butonları (büyüme, enflasyon, rezerv, gıda…): hover’da “ne / yükselirse / düşerse” 1’er cümle (TR+EN).

@@ -14,6 +14,89 @@ GAME.renderMenu = function () {
   GAME.showScreen('screen-menu');
 };
 
+/* ---- Ayarlar (kalıcı localStorage) ---- */
+GAME.SETTINGS_KEY = 'keSettings_oyungrok';
+GAME.loadSettings = function () {
+  try {
+    const raw = localStorage.getItem(GAME.SETTINGS_KEY);
+    if (!raw) return { confirmNew: true, feedCollapsedDefault: false };
+    return Object.assign({ confirmNew: true, feedCollapsedDefault: false }, JSON.parse(raw));
+  } catch (e) { return { confirmNew: true, feedCollapsedDefault: false }; }
+};
+GAME.saveSettings = function (s) {
+  try { localStorage.setItem(GAME.SETTINGS_KEY, JSON.stringify(s || GAME.loadSettings())); } catch (e) {}
+};
+
+GAME.renderSettings = function () {
+  if (GAME.i18n && GAME.i18n.applyDom) GAME.i18n.applyDom();
+  const body = document.getElementById('settings-body');
+  if (!body) return;
+  const t = (k, v) => (GAME.t ? GAME.t(k, v) : k);
+  const st = GAME.loadSettings();
+  const lang = (GAME.i18n && GAME.i18n.getLang && GAME.i18n.getLang()) || 'tr';
+  const vol = (GAME.Music && GAME.Music.volume != null) ? GAME.Music.volume : 0.4;
+  const volLabel = vol <= 0.001 ? t('ui.vol_mute') : (vol <= 0.5 ? t('ui.vol_40') : t('ui.vol_100'));
+
+  body.innerHTML =
+    '<div class="settings-row">' +
+    '<label class="settings-label">' + t('ui.set_language') + '</label>' +
+    '<select id="set-lang" class="lang-select settings-control">' +
+    '<option value="tr"' + (lang === 'tr' ? ' selected' : '') + '>TR</option>' +
+    '<option value="en"' + (lang === 'en' ? ' selected' : '') + '>EN</option>' +
+    '</select></div>' +
+
+    '<div class="settings-row">' +
+    '<label class="settings-label">' + t('ui.set_volume') + '</label>' +
+    '<button type="button" id="set-vol" class="btn settings-control">' + volLabel + '</button></div>' +
+
+    '<div class="settings-row">' +
+    '<label class="settings-check"><input type="checkbox" id="set-confirm-new"' + (st.confirmNew !== false ? ' checked' : '') + '> ' +
+    t('ui.set_confirm_new') + '</label></div>' +
+
+    '<div class="settings-row">' +
+    '<label class="settings-check"><input type="checkbox" id="set-feed-collapsed"' + (st.feedCollapsedDefault ? ' checked' : '') + '> ' +
+    t('ui.set_feed_collapsed') + '</label></div>' +
+
+    '<div class="settings-row settings-actions">' +
+    '<button type="button" id="set-reset-gloss" class="btn">' + t('ui.set_reset_glossary') + '</button>' +
+    '<span class="settings-hint" id="set-reset-gloss-msg"></span></div>' +
+
+    '<p class="settings-note">' + t('ui.set_note') + '</p>';
+
+  const langSel = document.getElementById('set-lang');
+  if (langSel) langSel.onchange = function () {
+    if (GAME.i18n && GAME.i18n.setLang) GAME.i18n.setLang(langSel.value);
+    GAME.renderSettings();
+  };
+  const volBtn = document.getElementById('set-vol');
+  if (volBtn) volBtn.onclick = function () {
+    if (GAME.Music && GAME.Music.cycleVolume) GAME.Music.cycleVolume();
+    GAME.renderSettings();
+  };
+  const conf = document.getElementById('set-confirm-new');
+  if (conf) conf.onchange = function () {
+    const s = GAME.loadSettings();
+    s.confirmNew = !!conf.checked;
+    GAME.saveSettings(s);
+  };
+  const feedC = document.getElementById('set-feed-collapsed');
+  if (feedC) feedC.onchange = function () {
+    const s = GAME.loadSettings();
+    s.feedCollapsedDefault = !!feedC.checked;
+    GAME.saveSettings(s);
+    try { localStorage.setItem('keFeedCollapsed_oyungrok', feedC.checked ? '1' : '0'); } catch (e) {}
+  };
+  const rg = document.getElementById('set-reset-gloss');
+  if (rg) rg.onclick = function () {
+    try { localStorage.removeItem(GAME.GLOSS_SKIP_KEY || 'keGlossSkip_oyungrok'); } catch (e) {}
+    const msg = document.getElementById('set-reset-gloss-msg');
+    if (msg) msg.textContent = t('ui.set_reset_done');
+    if (typeof GAME.renderFeed === 'function' && GAME.state) GAME.renderFeed();
+  };
+
+  GAME.showScreen('screen-settings');
+};
+
 /* ---- Nasıl oynanır (detaylı + konu butonları) ---- */
 GAME.renderAbout = function () {
   if (GAME.i18n && GAME.i18n.applyDom) GAME.i18n.applyDom();

@@ -221,7 +221,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* Menü butonları */
   document.getElementById('btn-new-game').onclick = () => {
-    if (GAME.hasSave() && !confirm(GAME.t('ui.confirm_new'))) return;
+    const conf = (GAME.loadSettings && GAME.loadSettings().confirmNew !== false);
+    if (GAME.hasSave() && conf && !confirm(GAME.t('ui.confirm_new'))) return;
     GAME.clearSave();
     GAME.renderCountrySelect();
   };
@@ -236,6 +237,10 @@ document.addEventListener('DOMContentLoaded', function () {
   };
   document.getElementById('btn-about').onclick = GAME.renderAbout;
   document.getElementById('btn-about-back').onclick = GAME.renderMenu;
+  const btnSet = document.getElementById('btn-settings');
+  if (btnSet) btnSet.onclick = GAME.renderSettings;
+  const btnSetBack = document.getElementById('btn-settings-back');
+  if (btnSetBack) btnSetBack.onclick = GAME.renderMenu;
 
   /* Oyun ekranı butonları */
   document.getElementById('btn-log').onclick = GAME.openLogModal;
