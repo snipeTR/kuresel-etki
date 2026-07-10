@@ -5,7 +5,7 @@
 # Sunucuda $HOME/gi-ops/ altına ops sarmalayıcıları kurar:
 #   deploy.sh       → GitHub → /var/www/html/oyungrok
 #   release.sh      → oyungrok → /var/www/html/ (site kökü)
-#   install-deps.sh → paket kurulum (INSTALL.sh)
+#   install-deps.sh → paket kurulum (install.sh)
 #   harden-sshd.sh  → SSH dayanıklılık
 #   status.sh       → durum
 #
@@ -89,12 +89,12 @@ cat > "$OPS_DIR/install-deps.sh" <<EOF
 set -euo pipefail
 OYUNGROK="\${OYUNGROK:-$OYUNGROK}"
 PUBLIC_WORK="\${PUBLIC_WORK:-$PUBLIC_WORK}"
-SCRIPT="\$OYUNGROK/tools/sh/INSTALL.sh"
+SCRIPT="\$OYUNGROK/tools/sh/install.sh"
 if [[ ! -f "\$SCRIPT" ]]; then
-  SCRIPT="\$PUBLIC_WORK/tools/sh/INSTALL.sh"
+  SCRIPT="\$PUBLIC_WORK/tools/sh/install.sh"
 fi
 if [[ ! -f "\$SCRIPT" ]]; then
-  echo "HATA: INSTALL.sh yok. Önce deploy edin."
+  echo "HATA: install.sh yok. Önce deploy edin."
   exit 1
 fi
 exec bash "\$SCRIPT" "\$@"
@@ -171,7 +171,7 @@ Ubuntu home kısayolları. Kaynak betikler: \`/var/www/html/oyungrok/tools/sh/\`
 | \`./deploy.sh\` / \`./update-dev.sh\` | GitHub → **oyungrok** (günlük) |
 | \`./release.sh\` | **oyungrok → /** site kökü |
 | \`./update-release.sh\` | deploy + release bir arada |
-| \`./install-deps.sh\` | paket kontrol/kur (\`INSTALL.sh\`) |
+| \`./install-deps.sh\` | paket kontrol/kur (\`install.sh\`) |
 | \`./harden-sshd.sh\` | SSH dayanıklılık |
 | \`./status.sh\` | durum |
 

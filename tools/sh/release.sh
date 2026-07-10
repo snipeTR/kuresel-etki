@@ -65,7 +65,7 @@ if [[ ! -d "$DEST" ]]; then
 fi
 
 if ! command -v rsync >/dev/null 2>&1; then
-  echo "HATA: rsync gerekli. bash tools/sh/INSTALL.sh"
+  echo "HATA: rsync gerekli. bash tools/sh/install.sh"
   exit 1
 fi
 

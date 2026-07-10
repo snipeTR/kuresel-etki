@@ -28,8 +28,8 @@ bash tools/sh/<script>.sh [args]
 ### Sık kullanım (repo / oyungrok)
 
 ```bash
-bash tools/sh/INSTALL.sh
-bash tools/sh/INSTALL.sh --check-only
+bash tools/sh/install.sh
+bash tools/sh/install.sh --check-only
 bash tools/sh/deploy-from-github.sh
 bash tools/sh/release.sh --yes
 bash tools/sh/harden-sshd.sh --yes

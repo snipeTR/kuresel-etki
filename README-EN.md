@@ -201,7 +201,7 @@ curl -fsSL https://raw.githubusercontent.com/snipeTR/global-impact/main/install.
 | Script | Role |
 |--------|------|
 | **`install.sh`** (repo root) | Bootstrap: clone + packages + `~/gi-ops` |
-| **`tools/sh/INSTALL.sh`** | Detailed multi-distro package install |
+| **`tools/sh/install.sh`** | Detailed multi-distro package install |
 | **`~/gi-ops/`** | Server shortcuts: deploy / release / status |
 
 ### Manual
@@ -210,7 +210,7 @@ curl -fsSL https://raw.githubusercontent.com/snipeTR/global-impact/main/install.
 git clone https://github.com/snipeTR/global-impact.git
 cd global-impact
 bash install.sh --yes
-# or: bash tools/sh/INSTALL.sh
+# or: bash tools/sh/install.sh
 
 node serve.js
 # → http://localhost:8123

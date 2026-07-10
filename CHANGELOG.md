@@ -15,7 +15,7 @@ _(Boş — sıradaki iş buraya)_
 
 ## 2026-07-10 — install.sh: tek komut curl\|bash kurulum
 
-- Kök `install.sh`: clone + `tools/sh/INSTALL.sh` + isteğe `~/gi-ops`.
+- Kök `install.sh`: clone + `tools/sh/install.sh` + isteğe `~/gi-ops`.
 - README TR/EN tek satır:  
   `curl -fsSL https://raw.githubusercontent.com/snipeTR/global-impact/main/install.sh | bash`
 - AGENTS / tools README / YAPILACAKLAR güncellendi.
@@ -64,7 +64,7 @@ _(Boş — sıradaki iş buraya)_
 
 ---
 
-## 2026-07-10 — tools/sh/INSTALL.sh: çoklu distro/mimari paket kurulumu
+## 2026-07-10 — tools/sh/install.sh: çoklu distro/mimari paket kurulumu
 
 - git, rsync, curl, ca-certificates, openssh, nodejs (+ opsiyonel nginx).
 - apt/dnf/yum/zypper/pacman/apk/brew; çoklu mimari.

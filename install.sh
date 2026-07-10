@@ -12,7 +12,7 @@
 # Ne yapar:
 #   1) git yoksa paket yöneticisi ile temel araçları dener
 #   2) Repoyu klonlar/günceller ($GI_DIR, varsayılan: $HOME/global-impact)
-#   3) tools/sh/INSTALL.sh ile git/rsync/curl/ssh/node (+nginx) kurar
+#   3) tools/sh/install.sh ile git/rsync/curl/ssh/node (+nginx) kurar
 #   4) Sunucu ise isteğe bağlı ~/gi-ops home ops kurar
 #
 # Ortam:
@@ -50,7 +50,7 @@ install.sh — Global Impact bootstrap (tek komut kurulum)
   bash install.sh --yes
   bash install.sh --check-only
 
-Ayrıntılı paket betiği: tools/sh/INSTALL.sh
+Ayrıntılı paket betiği: tools/sh/install.sh
 Sunucu ops: tools/sh/install-ops-to-home.sh → ~/gi-ops
 EOF
       exit 0
@@ -104,12 +104,12 @@ ensure_git_curl() {
 # --- 1) Repo ---
 clone_or_update() {
   if [[ "$SKIP_CLONE" == "1" ]]; then
-    if [[ -f "./tools/sh/INSTALL.sh" ]]; then
+    if [[ -f "./tools/sh/install.sh" ]]; then
       GI_DIR="$(pwd)"
       echo ">>> Mevcut dizin kullanılıyor: $GI_DIR"
       return 0
     fi
-    echo "HATA: --skip-clone ama tools/sh/INSTALL.sh yok."
+    echo "HATA: --skip-clone ama tools/sh/install.sh yok."
     exit 1
   fi
 
@@ -120,7 +120,7 @@ clone_or_update() {
     git -C "$GI_DIR" fetch --depth 1 origin "$BRANCH" || git -C "$GI_DIR" fetch origin
     git -C "$GI_DIR" checkout "$BRANCH" 2>/dev/null || true
     git -C "$GI_DIR" pull --ff-only origin "$BRANCH" || git -C "$GI_DIR" reset --hard "origin/$BRANCH"
-  elif [[ -f "$GI_DIR/tools/sh/INSTALL.sh" ]]; then
+  elif [[ -f "$GI_DIR/tools/sh/install.sh" ]]; then
     echo ">>> Mevcut kaynak ağacı: $GI_DIR"
   else
     echo ">>> Klonlanıyor → $GI_DIR"
@@ -129,16 +129,16 @@ clone_or_update() {
       || git clone --depth 1 "$REPO_URL" "$GI_DIR"
   fi
 
-  if [[ ! -f "$GI_DIR/tools/sh/INSTALL.sh" ]]; then
-    echo "HATA: $GI_DIR/tools/sh/INSTALL.sh bulunamadı."
+  if [[ ! -f "$GI_DIR/tools/sh/install.sh" ]]; then
+    echo "HATA: $GI_DIR/tools/sh/install.sh bulunamadı."
     exit 1
   fi
 }
 
 # Script repo içinden çalışıyorsa
-if [[ -f "$(dirname "$0")/tools/sh/INSTALL.sh" ]] 2>/dev/null; then
+if [[ -f "$(dirname "$0")/tools/sh/install.sh" ]] 2>/dev/null; then
   HERE="$(cd "$(dirname "$0")" && pwd)"
-  if [[ -f "$HERE/index.html" && -f "$HERE/tools/sh/INSTALL.sh" ]]; then
+  if [[ -f "$HERE/index.html" && -f "$HERE/tools/sh/install.sh" ]]; then
     GI_DIR="$HERE"
     SKIP_CLONE=1
   fi
@@ -160,8 +160,8 @@ INSTALL_ARGS=()
 [[ "$CHECK_ONLY" -eq 1 ]] && INSTALL_ARGS+=(--check-only)
 [[ "$WITH_NGINX" -eq 1 ]] && INSTALL_ARGS+=(--with-nginx)
 
-echo ">>> tools/sh/INSTALL.sh ${INSTALL_ARGS[*]:-}"
-bash tools/sh/INSTALL.sh "${INSTALL_ARGS[@]+"${INSTALL_ARGS[@]}"}"
+echo ">>> tools/sh/install.sh ${INSTALL_ARGS[*]:-}"
+bash tools/sh/install.sh "${INSTALL_ARGS[@]+"${INSTALL_ARGS[@]}"}"
 PKG_RC=$?
 if [[ $PKG_RC -ne 0 && "$CHECK_ONLY" -eq 1 ]]; then
   echo "Paket kontrolü eksik buldu (check-only)."

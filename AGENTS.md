@@ -241,8 +241,8 @@ Konsolda: `GAME.countNewsTemplates()`, `GAME.testInstrumentPaging()`.
 ```bash
 curl -fsSL https://raw.githubusercontent.com/snipeTR/global-impact/main/install.sh | bash
 ```
-- Kök **`install.sh`**: bootstrap (clone + `tools/sh/INSTALL.sh` + isteğe `~/gi-ops`).
-- **`tools/sh/INSTALL.sh`**: çoklu distro paket kurulumu (asıl paket betiği).
+- Kök **`install.sh`**: bootstrap (clone + `tools/sh/install.sh` + isteğe `~/gi-ops`).
+- **`tools/sh/install.sh`**: çoklu distro paket kurulumu (asıl paket betiği).
 - İkisini de koru; kök `install.sh` silinirse tek-komut kurulum kırılır.
 
 ```
@@ -334,5 +334,5 @@ lang/
 - Yeni dil eklemek: `lang/<kod>/pack.js` yaz → `GAME.i18n.supported` (`short: 'XX'`) → `index.html` script tag.
 - Yeni UI metni: `data-i18n` veya `GAME.t('ui.…')` + her dil paketinde anahtar.
 - `tools/js/build-lang-*.js` paket üretici (runtime zorunlu değil).
-- `tools/sh/INSTALL.sh` — çoklu distro/mimari paket kontrol + kurulum.
+- `tools/sh/install.sh` — çoklu distro/mimari paket kontrol + kurulum.
 - `tools/sh/release.sh` — bilinçli site kökü kopyası (oyungrok → `/var/www/html`).

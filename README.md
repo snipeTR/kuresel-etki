@@ -304,12 +304,12 @@ Nginx dahil (canlı web sunucu):
 curl -fsSL https://raw.githubusercontent.com/snipeTR/global-impact/main/install.sh | bash -s -- --yes --with-nginx
 ```
 
-Bu komut: repoyu indirir (`~/global-impact`), `tools/sh/INSTALL.sh` ile paketleri kurar, sunucuda `~/gi-ops` ops kısayollarını ekler.
+Bu komut: repoyu indirir (`~/global-impact`), `tools/sh/install.sh` ile paketleri kurar, sunucuda `~/gi-ops` ops kısayollarını ekler.
 
 | Betik | Rol |
 |--------|-----|
 | **`install.sh`** (kök) | Bootstrap: clone + paket + ops |
-| **`tools/sh/INSTALL.sh`** | Ayrıntılı paket kontrol/kur (apt/dnf/…) |
+| **`tools/sh/install.sh`** | Ayrıntılı paket kontrol/kur (apt/dnf/…) |
 | **`~/gi-ops/`** | Sunucuda deploy / release / status |
 
 ### Manuel clone
@@ -319,7 +319,7 @@ git clone https://github.com/snipeTR/global-impact.git
 cd global-impact
 bash install.sh --yes
 # veya yalnız paketler:
-bash tools/sh/INSTALL.sh
+bash tools/sh/install.sh
 
 node serve.js
 # → http://localhost:8123
