@@ -208,7 +208,10 @@ Konsolda: `GAME.countNewsTemplates()`, `GAME.testInstrumentPaging()`.
    - **Git erişimi varsa** private: `https://github.com/snipeTR/kuresel-etki-secrets`
      (`YAPILACAKLAR.md`, `ssh/*`). Public’e sızdırma.
    - Yoksa yalnızca `YAPILACAKLAR.example.md`.
-4. **Enstrüman silme.** Canlıda yalnız `/oyungrok/` — **`/oyun/` yazma**.
+4. **Enstrüman silme.**  
+   - **Geliştirme / günlük deploy:** yalnız `/oyungrok/` (`deploy-from-github.sh`).  
+   - **Site kökü (/**) release:** yalnızca bilinçli `tools/release.sh` — otomatik her işte çalıştırma.  
+   - **`/oyun/` asla** yazma/silme (eski stabil).
 5. Masaüstü düzenini bozmadan mobil değişiklikleri `body.mobile-ui` / media ile sınırla.
 6. Kayıt anahtarlarına `_oyungrok` soneki zorunlu (çakışma olmasın).
 7. Tur script modelini basitleştirip “sadece AIIndex”e geri alma — kullanıcı v2’yi istedi.
@@ -217,12 +220,15 @@ Konsolda: `GAME.countNewsTemplates()`, `GAME.testInstrumentPaging()`.
 10. **CHANGELOG zorunlu:** Her anlamlı değişiklikten sonra `CHANGELOG.md` üstüne tarihli madde ekle (ne / neden / dosyalar). Ajanlar ve sonraki oturumlar buradan tarih okur.
 11. **Yayın üçlüsü (zorunlu — her anlamlı iş bitince):**  
     a) **Yerel kaydet** (dosyaları yaz).  
-    b) **GitHub public:** `git add` → `git status` (`YAPILACAKLAR.md` yok) → `commit` → `git push origin main` (`snipeTR/global-impact`).  
-    c) **Sunucu:** SSH ile  
+    b) **GitHub public:** `git add` → `git status` (`YAPILACAKLAR.md` / `deviralma.md` yok) → `commit` → `git push origin main` (`snipeTR/global-impact`).  
+    c) **Sunucu (geliştirme yolu):** SSH ile  
        `bash ~/global-impact-work/kuresel-etki-secrets/deploy/deploy-from-github.sh`  
-       (yalnız `/var/www/html/oyungrok`; **`/oyun/` yazma**).  
+       → **`/var/www/html/oyungrok`** — **`/oyun/` yazma**.  
+    d) **Site kökü (/**) “release”:** kullanıcı özellikle isterse veya `tools/release.sh` çalıştırırsa;  
+       günlük işlerde **otomatik root kopyalama yok**.  
+       `bash /var/www/html/oyungrok/tools/release.sh --yes`  
     Gizli dosya değiştiyse ayrıca private `kuresel-etki-secrets` push.  
-    Kullanıcı “sadece local” demedikçe bu üç adım atlanmaz.
+    Kullanıcı “sadece local” demedikçe a–c atlanmaz; **d bilinçli**.
 
 ### 10.0 Yardım / about metinleri
 

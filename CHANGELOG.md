@@ -13,6 +13,15 @@ _(Boş — sıradaki iş buraya)_
 
 ---
 
+## 2026-07-10 — tools/release.sh: site kökü sürüm kopyası
+
+- `tools/release.sh`: `/oyungrok` → `/var/www/html/` (yalnız index + css/js/lang/assets/music).
+- **Geliştirme yolu değişmedi:** günlük deploy hâlâ yalnız `/oyungrok/`.
+- **`/oyun/` dokunulmaz.** release her işte otomatik değil; bilinçli çalıştırma.
+- AGENTS § yayın: a–c oyungrok; d = release.
+
+---
+
 ## 2026-07-10 — tools/INSTALL.sh: çoklu distro/mimari paket kurulumu
 
 - `tools/INSTALL.sh`: git, rsync, curl, ca-certificates, openssh, nodejs (opsiyonel nginx).

@@ -303,6 +303,11 @@ bash tools/INSTALL.sh
 
 node serve.js
 # → http://localhost:8123
+
+# Sunucu:
+#   Geliştirme (varsayılan):  …/oyungrok/   ← deploy-from-github.sh
+#   Site kökü release (bilinçli):  bash tools/release.sh --yes
+#   Eski stabil: …/oyun/  (dokunma)
 ```
 
 `serve.js` yalnızca statik dosya sunar. `index.html` dosya protokolüyle de açılabilir; müzik / CORS için HTTP tercih edilir.
