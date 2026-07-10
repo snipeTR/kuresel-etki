@@ -209,8 +209,8 @@ Konsolda: `GAME.countNewsTemplates()`, `GAME.testInstrumentPaging()`.
      (`YAPILACAKLAR.md`, `ssh/*`). Public’e sızdırma.
    - Yoksa yalnızca `YAPILACAKLAR.example.md`.
 4. **Enstrüman silme.**  
-   - **Geliştirme / günlük deploy:** yalnız `/oyungrok/` (`deploy-from-github.sh`).  
-   - **Site kökü (/**) release:** yalnızca bilinçli `tools/release.sh` — otomatik her işte çalıştırma.  
+   - **Geliştirme / günlük deploy:** yalnız `/oyungrok/` (`tools/sh/deploy-from-github.sh` / secrets deploy).  
+   - **Site kökü (/**) release:** yalnızca bilinçli `tools/sh/release.sh` — otomatik her işte çalıştırma.  
    - **`/oyun/` asla** yazma/silme (eski stabil).
 5. Masaüstü düzenini bozmadan mobil değişiklikleri `body.mobile-ui` / media ile sınırla.
 6. Kayıt anahtarlarına `_oyungrok` soneki zorunlu (çakışma olmasın).
@@ -224,16 +224,39 @@ Konsolda: `GAME.countNewsTemplates()`, `GAME.testInstrumentPaging()`.
     c) **Sunucu (geliştirme yolu):** SSH ile  
        `bash ~/global-impact-work/kuresel-etki-secrets/deploy/deploy-from-github.sh`  
        → **`/var/www/html/oyungrok`** — **`/oyun/` yazma**.  
-    d) **Site kökü (/**) “release”:** kullanıcı özellikle isterse veya `tools/release.sh` çalıştırırsa;  
+    d) **Site kökü (/**) “release”:** kullanıcı özellikle isterse;  
        günlük işlerde **otomatik root kopyalama yok**.  
-       `bash /var/www/html/oyungrok/tools/release.sh --yes`  
+       `bash /var/www/html/oyungrok/tools/sh/release.sh --yes`  
     Gizli dosya değiştiyse ayrıca private `kuresel-etki-secrets` push.  
     Kullanıcı “sadece local” demedikçe a–c atlanmaz; **d bilinçli**.
 
-### 10.0 Yardım / about metinleri
+### 10.0 `tools/` yapısı (koru — ajanlar)
+
+```
+tools/
+  README.md          # yönlendirme
+  js/                # Node CLI — runtime DEĞİL
+    README.md
+    sync-instrument-descs.js
+    sync-help-i18n.js
+    build-lang-tr.js / build-lang-en.js
+    fill-tr-descs-from-data.js
+  sh/                # Bash — runtime DEĞİL
+    README.md
+    INSTALL.sh
+    release.sh
+    deploy-from-github.sh
+```
+
+- **Tek seferlik `patch-*.js` ekleme / bırakma.** Kalıcı iş kaynak dosyaya veya `tools/js` senkron scriptlerine.
+- Yeni Node aracı → `tools/js/`; shell → `tools/sh/`. README’leri güncelle.
+- Node script kök yolu: `path.join(__dirname, '../..')`.
+- Oyun runtime: `index.html` → `js/`, `lang/`, `css/` — **tools yüklenmez**.
+
+### 10.0b Yardım / about metinleri
 
 - Baseline TR: `js/ui/help.js` (`HELP_TOPICS`, `ABOUT_MAIN_HTML`).
-- Pack override: `lang/tr|en/pack.js` → `help` + `about` (`tools/sync-help-i18n.js`).
+- Pack override: `lang/tr|en/pack.js` → `help` + `about` (`node tools/js/sync-help-i18n.js`).
 - Yeni mekanik (maliyet, ayar, UI): **help.js + TR/EN about/help + CHANGELOG** birlikte güncelle.
 - Tooltip çapraz kurallar: `GAME.CROSS_RULES_I18N` (tr/en).
 
@@ -252,10 +275,10 @@ Enstrüman **davranış / maliyet / desc** değişince **üç yer** güncel olma
 Kontrol:
 
 ```bash
-node tools/sync-instrument-descs.js --check
+node tools/js/sync-instrument-descs.js --check
 ```
 
-Maliyet/kurallar için `js/ui/panels.js` → `CROSS_RULES` ve `instrumentDetail` dinamik notları da güncelle.
+Maliyet/kurallar için `js/ui/panels.js` → `CROSS_RULES_I18N` / `getCrossRules` ve `instrumentDetail` dinamik notları da güncelle.
 
 ### 10.2 Gelişmiş ayarlar / tunables (masaüstü)
 
@@ -292,5 +315,6 @@ lang/
 - **gov kodları çevrilmez** (`demokratik` / `otoriter` / `hibrit` / `birlik`) — görünen etiket `GAME.govLabel(gov)`.
 - Yeni dil eklemek: `lang/<kod>/pack.js` yaz → `GAME.i18n.supported` (`short: 'XX'`) → `index.html` script tag.
 - Yeni UI metni: `data-i18n` veya `GAME.t('ui.…')` + her dil paketinde anahtar.
-- `tools/build-lang-*.js` paket üretici (runtime zorunlu değil).
-- `tools/INSTALL.sh` — Linux/macOS çoklu distro/mimari: git/rsync/curl/ssh/node (+ opsiyonel nginx) kontrol + onaylı kurulum.
+- `tools/js/build-lang-*.js` paket üretici (runtime zorunlu değil).
+- `tools/sh/INSTALL.sh` — çoklu distro/mimari paket kontrol + kurulum.
+- `tools/sh/release.sh` — bilinçli site kökü kopyası (oyungrok → `/var/www/html`).

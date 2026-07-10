@@ -297,16 +297,17 @@ git clone https://github.com/snipeTR/global-impact.git
 cd global-impact
 
 # Linux/macOS: yayın + dev paketlerini kontrol/kur (git, rsync, curl, node, …)
-bash tools/INSTALL.sh
-# bash tools/INSTALL.sh --check-only   # yalnız rapor
-# bash tools/INSTALL.sh --with-nginx   # canlı web sunucu rolü
+bash tools/sh/INSTALL.sh
+# bash tools/sh/INSTALL.sh --check-only
+# bash tools/sh/INSTALL.sh --with-nginx
 
 node serve.js
 # → http://localhost:8123
 
+# Araçlar: tools/js (Node) · tools/sh (bash) — oyun runtime değil
 # Sunucu:
-#   Geliştirme (varsayılan):  …/oyungrok/   ← deploy-from-github.sh
-#   Site kökü release (bilinçli):  bash tools/release.sh --yes
+#   Geliştirme: …/oyungrok/  ← deploy-from-github
+#   Site kökü release: bash tools/sh/release.sh --yes
 #   Eski stabil: …/oyun/  (dokunma)
 ```
 
@@ -359,7 +360,9 @@ global-impact/
 │       ├── mobile.js       # 5 sekme, swipe, döngü
 │       ├── music.js        # fade + playlist + ses basamakları
 │       └── main.js         # onay modalı, runTurnAnimated, resume
-├── tools/                  # INSTALL.sh, i18n, desc sync, deploy sarmalayıcı
+├── tools/
+│   ├── js/                 # Node CLI (senkron/build) — runtime değil
+│   └── sh/                 # INSTALL, release, deploy sarmalayıcı
 ├── CHANGELOG.md
 ├── test-consistency.js
 ├── serve.js

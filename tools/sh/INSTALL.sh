@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
 # Global Impact / Küresel Etki — INSTALL.sh
-# Konum: tools/INSTALL.sh
+# Konum: tools/sh/INSTALL.sh
 #
 # Amaç: Oyunu yerelde çalıştırmak + GitHub'dan sunucuya yayımlamak için
 # gereken sistem paketlerini (çok mimari / çok dağıtım) kontrol et ve kur.
@@ -11,10 +11,10 @@
 # macOS: Homebrew ile kontrol + kurulum denemesi
 #
 # Kullanım:
-#   bash tools/INSTALL.sh
-#   bash tools/INSTALL.sh --yes          # onaysız kur (CI)
-#   bash tools/INSTALL.sh --check-only   # sadece rapor, kurma
-#   bash tools/INSTALL.sh --with-nginx   # nginx'i zorunlu say
+#   bash tools/sh/INSTALL.sh
+#   bash tools/sh/INSTALL.sh --yes          # onaysız kur (CI)
+#   bash tools/sh/INSTALL.sh --check-only   # sadece rapor, kurma
+#   bash tools/sh/INSTALL.sh --with-nginx   # nginx'i zorunlu say
 # =============================================================================
 set -uo pipefail
 
@@ -30,10 +30,10 @@ for arg in "$@"; do
       cat <<'EOF'
 INSTALL.sh — Global Impact yayın / geliştirme bağımlılıkları
 
-  bash tools/INSTALL.sh              Kontroller + rapor + onayla kur
-  bash tools/INSTALL.sh --check-only Yalnız rapor
-  bash tools/INSTALL.sh --yes        Onay sormadan kur
-  bash tools/INSTALL.sh --with-nginx nginx zorunlu paket listesine ekle
+  bash tools/sh/INSTALL.sh              Kontroller + rapor + onayla kur
+  bash tools/sh/INSTALL.sh --check-only Yalnız rapor
+  bash tools/sh/INSTALL.sh --yes        Onay sormadan kur
+  bash tools/sh/INSTALL.sh --with-nginx nginx zorunlu paket listesine ekle
 
 Gerekli (yayın + test):
   git, rsync, curl, ca-certificates, openssh-client, nodejs (v18+)
@@ -71,9 +71,9 @@ die() {
 • Kurulumdan sonra:
     node serve.js                 → http://localhost:8123
     node test-consistency.js      → ALL_OK
-    bash tools/deploy-from-github.sh  (sunucuda / secrets kuruluysa)
+    bash tools/sh/deploy-from-github.sh  (sunucuda / secrets kuruluysa)
 • Repo: https://github.com/snipeTR/global-impact
-• Detay: AGENTS.md, README.md, tools/INSTALL.sh --help
+• Detay: AGENTS.md, README.md, tools/sh/INSTALL.sh --help
 ─────────────────────────────────────────────────────────
 HELP
   exit 1
@@ -383,7 +383,7 @@ if [[ ${#MISSING_LOGICAL[@]} -eq 0 ]]; then
   echo "Sonraki adımlar:"
   echo "  node serve.js"
   echo "  node test-consistency.js"
-  echo "  # sunucu: bash tools/deploy-from-github.sh  (secrets kuruluysa)"
+  echo "  # sunucu: bash tools/sh/deploy-from-github.sh  (secrets kuruluysa)"
   exit 0
 fi
 
@@ -421,7 +421,7 @@ echo ""
 
 if [[ "$YES" -ne 1 ]]; then
   if [[ ! -t 0 ]]; then
-    die "Etkileşimli terminal yok. Onaysız kurulum için: bash tools/INSTALL.sh --yes"
+    die "Etkileşimli terminal yok. Onaysız kurulum için: bash tools/sh/INSTALL.sh --yes"
   fi
   read -r -p "Kuruluma devam edilsin mi? [y/N] " ans
   case "$ans" in
@@ -502,6 +502,6 @@ echo "  cd $(cd "$(dirname "$0")/.." && pwd)"
 echo "  node serve.js                 # http://localhost:8123"
 echo "  node test-consistency.js"
 echo "  # Canlı yayın (sunucu + secrets):"
-echo "  #   bash tools/deploy-from-github.sh"
+echo "  #   bash tools/sh/deploy-from-github.sh"
 echo ""
 exit 0

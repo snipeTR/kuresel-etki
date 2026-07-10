@@ -13,20 +13,27 @@ _(Boş — sıradaki iş buraya)_
 
 ---
 
-## 2026-07-10 — tools/release.sh: site kökü sürüm kopyası
+## 2026-07-10 — tools/ yeniden yapı: js/ + sh/; patch JS silindi
 
-- `tools/release.sh`: `/oyungrok` → `/var/www/html/` (yalnız index + css/js/lang/assets/music).
-- **Geliştirme yolu değişmedi:** günlük deploy hâlâ yalnız `/oyungrok/`.
-- **`/oyun/` dokunulmaz.** release her işte otomatik değil; bilinçli çalıştırma.
-- AGENTS § yayın: a–c oyungrok; d = release.
+- `tools/js/`: kalıcı Node CLI (sync-instrument-descs, sync-help-i18n, build-lang-*).
+- `tools/sh/`: INSTALL.sh, release.sh, deploy-from-github.sh.
+- Tek seferlik `patch-*.js` kaldırıldı.
+- Her klasörde + `tools/README.md`; AGENTS §10.0 yapı kuralı.
+- Komut yolları: `node tools/js/...`, `bash tools/sh/...`.
 
 ---
 
-## 2026-07-10 — tools/INSTALL.sh: çoklu distro/mimari paket kurulumu
+## 2026-07-10 — tools/sh/release.sh: site kökü sürüm kopyası
 
-- `tools/INSTALL.sh`: git, rsync, curl, ca-certificates, openssh, nodejs (opsiyonel nginx).
-- apt/dnf/yum/zypper/pacman/apk/brew; arch: x86_64, arm64, armv7, …
-- Önce kontrol + rapor; onay sonrası kurulum; hata + kısa yardım.
+- `tools/sh/release.sh`: `/oyungrok` → `/var/www/html/` (index + css/js/lang/assets/music).
+- Geliştirme yolu: günlük deploy yalnız `/oyungrok/`. `/oyun/` dokunulmaz.
+
+---
+
+## 2026-07-10 — tools/sh/INSTALL.sh: çoklu distro/mimari paket kurulumu
+
+- git, rsync, curl, ca-certificates, openssh, nodejs (+ opsiyonel nginx).
+- apt/dnf/yum/zypper/pacman/apk/brew; çoklu mimari.
 - `--check-only`, `--yes`, `--with-nginx`, `--help`.
 
 ---

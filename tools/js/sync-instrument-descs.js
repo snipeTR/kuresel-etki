@@ -19,7 +19,7 @@
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
-const root = path.join(__dirname, '..');
+const root = path.join(__dirname, '../..');
 
 function loadInstruments() {
   const sandbox = { window: {}, console };

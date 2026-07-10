@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Global Impact — tools/release.sh
+# Global Impact — tools/sh/release.sh
 #
 # Amaç: Onaylı / açık “sürüm” yayınında oyunu web sunucusunun HTML köküne
 #       (site ilk açılış: /) kopyalamak.
@@ -14,9 +14,9 @@
 #   Eski stabil /oyun/ ASLA silinmez / üzerine yazılmaz.
 #
 # Kullanım (sunucuda):
-#   bash /var/www/html/oyungrok/tools/release.sh
-#   bash tools/release.sh --yes
-#   SOURCE=/path/to/build DEST=/var/www/html bash tools/release.sh --yes
+#   bash /var/www/html/oyungrok/tools/sh/release.sh
+#   bash tools/sh/release.sh --yes
+#   SOURCE=/path/to/build DEST=/var/www/html bash tools/sh/release.sh --yes
 #
 # Ortam:
 #   SOURCE  varsayılan: /var/www/html/oyungrok
@@ -65,7 +65,7 @@ if [[ ! -d "$DEST" ]]; then
 fi
 
 if ! command -v rsync >/dev/null 2>&1; then
-  echo "HATA: rsync gerekli. bash tools/INSTALL.sh"
+  echo "HATA: rsync gerekli. bash tools/sh/INSTALL.sh"
   exit 1
 fi
 
@@ -84,7 +84,7 @@ echo ""
 
 if [[ "$YES" -ne 1 ]]; then
   if [[ ! -t 0 ]]; then
-    echo "Etkileşim yok. Onaysız: bash tools/release.sh --yes"
+    echo "Etkileşim yok. Onaysız: bash tools/sh/release.sh --yes"
     exit 1
   fi
   read -r -p "Site köküne RELEASE kopyası yapılsın mı? [y/N] " ans

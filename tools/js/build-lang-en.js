@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
-const root = path.join(__dirname, '..');
+const root = path.join(__dirname, '../..');
 
 const tr = {};
 const sb = { window: {}, GAME: { i18n: { register(l, s, d) { tr[s] = d; } } } };

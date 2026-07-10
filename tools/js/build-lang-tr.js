@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
 
-const root = path.join(__dirname, '..');
+const root = path.join(__dirname, '../..');
 const sandbox = { window: {}, console };
 sandbox.window.GAME = sandbox.GAME = {
   pick: a => a[0],

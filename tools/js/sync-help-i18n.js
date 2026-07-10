@@ -5,7 +5,7 @@
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
-const root = path.join(__dirname, '..');
+const root = path.join(__dirname, '../..');
 
 function loadHelpJs() {
   let code = fs.readFileSync(path.join(root, 'js/ui/help.js'), 'utf8');

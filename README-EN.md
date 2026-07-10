@@ -190,13 +190,16 @@ Modern browser; optional **Node.js** 18+ for `serve.js` / tests. No npm install.
 git clone https://github.com/snipeTR/global-impact.git
 cd global-impact
 
-# Linux/macOS: install/check publish deps (git, rsync, curl, node, …)
-bash tools/INSTALL.sh
-# bash tools/INSTALL.sh --check-only
-# bash tools/INSTALL.sh --with-nginx   # if hosting with nginx
+# Linux/macOS: install/check publish deps
+bash tools/sh/INSTALL.sh
+# bash tools/sh/INSTALL.sh --check-only
+# bash tools/sh/INSTALL.sh --with-nginx
 
 node serve.js
 # → http://localhost:8123
+
+# tools/js = Node helpers; tools/sh = bash (not game runtime)
+# Server: /oyungrok = dev; tools/sh/release.sh = site root (optional)
 ```
 
 ## 2.2 i18n (`lang/`)
@@ -224,7 +227,8 @@ global-impact/
 ├── js/data/                # countries, instruments, disasters, glossary
 ├── js/core/                # state, tunables, effects, turn, ai…
 ├── js/ui/                  # panels, screens (settings/advanced), charts…
-├── tools/                  # i18n, desc sync, deploy wrapper
+├── tools/js/               # Node CLI (not runtime)
+├── tools/sh/               # INSTALL, release, deploy wrapper
 ├── AGENTS.md · CHANGELOG.md
 ├── YAPILACAKLAR.example.md # public template only
 ├── README.md / README-EN.md
